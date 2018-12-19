@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+  <script src="{% static  "js/raphael-2.1.4.min.js" %}"></script>
+  <script src="{% static  "js/justgage.js" %}"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+
+</head>
+
+<body>
+  <h3>Air Humidity</h3>
+  <div id="air_humidity" class="gauge"></div>
+  <h3>Air Temperature</h3>
+  <div id="air_temperature" class="gauge"></div>
+  <h3>Soil Moisure</h3>
+  <div id="soil_moisure" class="gauge"></div>
+  <h3>Soil Temperature</h3>
+  <div id="soil_temperature" class="gauge"></div>
+
+<script src="{% static "js/config_firebase.js" %}"></script>
+ <script>
+   
+firebase.initializeApp(config_firebase);
+var database = firebase.database();
+
+var air_humidity = "{{air_humidity}}"
+var air_temperature = "{{air_temperature}}"
+var soil_moisure = "{{soil_moisure}}"
+var soil_temperature = "{{soil_temperature}}"
+
+
+</script>
+<script src="{% static "js/meter.js" %}"></script>
+</body>
+</html>

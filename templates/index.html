@@ -1,0 +1,808 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "assets/images/logoja-icon.png" %}">
+    <title>Welcome</title>
+    <!-- Custom CSS -->
+    <link href="{% static "assets/libs/flot/css/float-chart.css" %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static "css/style.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/button.css" %}" rel="stylesheet">
+    <link href="{% static "css/main.css" %}" rel="stylesheet">
+    
+    <!--<link href="{% static "css/bootstrap3-3-7/bootstrap.css" %}" rel="stylesheet">-->
+    <!--<link href="{% static "css/bootstrap3-3-7/bootstrap-theme.css" %}" rel="stylesheet">-->
+    <link href="{% static "css/datepicker/bootstrap-datepicker.css" %}" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script src="{% static  "js/raphael-2.1.4.min.js" %}"></script>
+    <script src="{% static  "js/justgage.js" %}"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    
+    <!--<link href="{% static "css/style.min.css" %}" rel="stylesheet">-->
+    <!--<link href="dist/css/style.min.css" rel="stylesheet">-->
+    <!--<link href="dist/css/button.css" rel="stylesheet">-->
+    <!--<link href="dist/css/main.css" rel="stylesheet">-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a href = "/index/" class="navbar-brand">
+                        <!-- Logo icon -->
+                        <b class="logo-icon ">
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="{% static "assets/images/logoja-icon.png" %}" alt="homepage" class="light-logo" />
+                           
+                        </b>
+                        <!--End Logo icon -->
+                         <!-- Logo text -->
+                        <span class="logo-text">
+                             <!-- dark Logo text -->
+                             <img src="{% static "assets/images/logoja-text.png" %}" alt="homepage" class="light-logo" />
+                            
+                        </span>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="/valve/"><i class="text-white fas fa-power-off"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
+                    </ul>
+                   
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="p-t-30">
+                        <li class="sidebar-item selected"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">หน้าหลัก</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/vegetables/view/" aria-expanded="false"><i class="fas fa-database"></i><span class="hide-menu">ข้อมูลพืชผล</span></a></li>
+                        <li class="sidebar-item bar-mobile"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/graph/" aria-expanded="false"><i class="fas fa-chart-bar"></i><span class="hide-menu">กราฟ</span></a></li>
+                        <li class="sidebar-item bar-mobile"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/history/" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu">ประวัติ</span></a></li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+             <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title1">หน้าหลัก</h4>
+                        <h4 class="page-title2">พืชผล</h4>
+                        <div class="ml-auto text-right plant">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><i class="fa fa-plus"></i><a href= "#" data-toggle="modal" data-target="#plant-modal"> ปลูกเพิ่ม</a></li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Sales Cards  -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12 show-meter" style="padding:0;">
+                        <div class="card">
+                        <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">ตู้นอกแปลง</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab2" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">ตู้คอนโทรล</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">ตู้กลางแปลง</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">ตู้ต้นแปลง</span></a> </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content tabcontent-border">
+                                <div class="tab-pane active" id="tab1" role="tabpanel">
+                                    <div class="box bg-white text-center">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">อุณหภูมิ(อากาศ)</h4>
+                                                <div id="x_air_temperature" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">ความชื้น(อากาศ)</h4>
+                                                <div id="x_air_humidity" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">อุณหภูมิ(ดิน)</h4>
+                                                <div id="x_soil_temperature" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">ความชื้น(ดิน)</h4>
+                                                <div id="x_soil_moisure" class="gauge"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane active" id="tab2" role="tabpanel">
+                                    <div class="box bg-white text-center">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">อุณหภูมิ(อากาศ)</h4>
+                                                <div id="a_air_temperature" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">ความชื้น(อากาศ)</h4>
+                                                <div id="a_air_humidity" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">อุณหภูมิ(ดิน)</h4>
+                                                <div id="a_soil_temperature" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">ความชื้น(ดิน)</h4>
+                                                <div id="a_soil_moisure" class="gauge"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane active" id="tab3" role="tabpanel">
+                                    <div class="box bg-white text-center">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">อุณหภูมิ(อากาศ)</h4>
+                                                <div id="b_air_temperature" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">ความชื้น(อากาศ)</h4>
+                                                <div id="b_air_humidity" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">อุณหภูมิ(ดิน)</h4>
+                                                <div id="b_soil_temperature" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">ความชื้น(ดิน)</h4>
+                                                <div id="b_soil_moisure" class="gauge"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane active" id="tab4" role="tabpanel">
+                                    <div class="box bg-white text-center">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">อุณหภูมิ(อากาศ)</h4>
+                                                <div id="c_air_temperature" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">ความชื้น(อากาศ)</h4>
+                                                <div id="c_air_humidity" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">อุณหภูมิ(ดิน)</h4>
+                                                <div id="c_soil_temperature" class="gauge"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="card-title">ความชื้น(ดิน)</h4>
+                                                <div id="c_soil_moisure" class="gauge"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row valvcontrol">
+                            <!-- Column -->
+                            <div class="card col-md-12">
+                                <div class="card-body showseed">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <h4 class="card-title">ควบคุมวาล์ว</h4>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <p class="breadcrumb-item"><button type="button" class="btn btn-danger btn-sm">ตั้งเวลา</button></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-xlg-3">
+                                        <div class="card card-hover">
+                                            <div class="box text-center">
+                                                </br>
+                                                <h1 class="font-light text-white">
+                                                <button id="sensor_control" type="button" class="btn btn-lg btn-toggle {{ button1 }}" data-toggle="button" aria-pressed="{{ state1 }}" autocomplete="off">
+                                                    <div class="handle"></div>
+                                                </button>
+                                                </h1>
+                                                </br>
+                                                <h6 class="text-black">ควบคุมวาล์ว1</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xlg-3">
+                                        <div class="card card-hover">
+                                            <div class="box text-center">
+                                                </br>
+                                                <h1 class="font-light text-white">
+                                                <button id="sensor_control2" type="button" class="btn btn-lg btn-toggle {{ button2 }}" data-toggle="button" aria-pressed="{{ state2 }}" autocomplete="off">
+                                                    <div class="handle"></div>
+                                                </button>
+                                                </h1>
+                                                </br>
+                                                <h6 class="text-black">ควบคุมวาล์ว2</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card plant-card">
+                            <div class="card-body showseed">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4 class="card-title">พืชผล</h4>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <p class="breadcrumb-item"><i class="fa fa-plus"></i><a href= "#" data-toggle="modal" data-target="#plant-modal"> ปลูกเพิ่ม</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-widgets scrollable">
+                                {% if plant|length == 0 %}
+                                <ul class="list-style-none">
+                                    <li class="d-flex no-block flex-row comment-row card-body border-top">
+                                        <i class="fas fa-box-open w-30px m-t-5"></i>
+                                        <div>
+                                            <p class="m-b-0 font-medium p-0">ไม่มีรายการที่ปลูก</p>
+                                              
+                                        </div>
+                                    </li>
+                                </ul>
+                                {% endif %}
+                                
+                                <ul class="list-style-none">
+                                    {% for p in plant %}
+                                    <li class="d-flex no-block flex-row comment-row card-body border-top" data-toggle="tooltip" data-placement="top" title="ปลูกมา {{ p.duration }} วัน">
+                                        
+                                        <i class="fas fa-leaf w-30px m-t-5 text-success"></i>
+                                        <div class="plant-data" id="{{ p.id }}">
+                                            <p class="m-b-0 font-medium p-0">{{ p.plant_type }}</p>
+                                            <span class="text-muted">วันที่เริ่มปลูก: {{ p.start_plant_timestamp }}</span>
+                                            </br>
+                                            <span class="text-muted">เซ็นเซอร์: {{ p.sensor }}</span>  
+                                        </div>
+                                        <div class="ml-auto">
+                                            <div class="tetx-right" style="margin-bottom: 10px;">
+                                                <button type="button" class="btn btn-cyan btn-sm compost-button" value="{{ p.id }}" data-toggle="modal" data-target="#add-compost-modal" >ใส่ปุ๋ย</button> 
+                                            </div>
+                                            <div class="tetx-right">
+                                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#keep-plant-modal">เก็บเกี่ยว</button> 
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="tetx-right">
+                                            <form id="delete-form" action="/plant/delete/" method="post">
+                                                <input type="hidden" name="delete-id" value="{{ p.id }}">
+                                                <button type="submit" class="close" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            {% csrf_token %}
+                                            </form>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+        <div style="height: 50px" class="mobileindex"></div>
+        <footer class="footbar">
+            <div class="row">
+                <!-- Column -->
+
+                <div class="col-3">
+                    <div class="boxs text-center now">
+                        <h4><i class="fas fa-seedling"></i></h4>
+                        <h6>พืชผล</h6>
+                    </div>
+                </div>
+                 <!-- Column -->
+                <div class="col-3">
+                    <a href="/control/">
+                        <div class="boxs text-center">
+                            <h4><i class="fas fa-thermometer-half"></i></h4>
+                            <h6>เซ็นเซอร์</h6>
+                        </div>
+                    </a>
+                </div>
+                <!-- Column -->
+                <div class="col-3">
+                    <a href="/history/">
+                        <div class="boxs text-center">
+                            <h4><i class="fas fa-history"></i></h4>
+                            <h6>ประวัติ</h6>
+                        </div>
+                    </a>
+                </div>
+                 <!-- Column -->
+                <div class="col-3">
+                    <a href="/graph/">
+                        <div class="boxs text-center" href="#">
+                            <h4><i class="fas fa-chart-bar"></i></h4>
+                            <h6>กราฟ</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <div class="modal fade" id="plant-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">เลือกพืชที่ต้องการจะปลูก</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="plant-form" action="/plant/add/" method="post">
+                        <div class="row">
+                            <div class="col-3 text-right">
+                                <h5>ชนิดพืช:</h5>
+                            </div>
+                            <div class="col-9">
+                                <div class="btn-group">
+                                    <button type="button" id="ch-plant" class="btn btn-primary dropdown-toggle plant-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">เลือกชนิดพืช</button>
+                                    <ul class="dropdown-menu plant-dropdown-items">
+                                        <input class="form-control" id="search-dropdown-plant" type="text" onkeyup="searchPlantDrop()" placeholder="ค้นหา..">
+                                        {% for v in vegs %}
+                                            <li><a class="dropdown-item plant-item" name="{{ v.type_name }}" href="#">{{ v.type_name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-3 text-right">
+                                <h5>วันที่เริ่มปลูก:</h5>
+                            </div>
+                            <div class="col-9">
+                                <input id="inputdatepicker" class="datepicker" data-date-format="dd/mm/yyyy" readonly>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-3 text-right">
+                                <h5>เซ็นเซอร์:</h5>
+                            </div>
+                            <div class="col-9">
+                                <div class="btn-group">
+                                    <button type="button" id="ch-sensor" class="btn btn-primary dropdown-toggle sensor-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="">Node A</button>
+                                    <ul class="dropdown-menu sensor-dropdown-items">
+                                        <li><a class="dropdown-item sensor-item" name="Node A" href="#">Node A</a></li>
+                                        <li><a class="dropdown-item sensor-item" name="Node B" href="#">Node B</a></li>
+                                        <li><a class="dropdown-item sensor-item" name="Node C" href="#">Node C</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="plant-type" id="plant-type" value="" >
+                        <input type="hidden" name="start-plant-timestamp" id="start-plant-timestamp" value="" >
+                        <input type="hidden" name="end-plant-timestamp" id="end-plant-timestamp" value="" >
+                        <input type="hidden" name="sensor" id="sensor" value="" >
+                        <input type="hidden" name="is-harvested" id="is-harvested" value="" >
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="button" id="submit-plant"  class="btn btn-success">ตกลง</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--popup keep plant-->
+    <div class="modal fade" id="keep-plant-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">เก็บเกี่ยวพืชผล</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="keep-plant-form" action="#" method="post">
+                        <div class="row">
+                            <div class="col-4 text-right">
+                                <h5>จำนวนผลผลิต:</h5>
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" name="total-keep" type="number">
+                            </div>
+                            <div class="col-4">
+                                <div class="btn-group">
+                                    <button type="button" id="ch-keep" class="btn btn-primary dropdown-toggle plant-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">กิโลกรัม</button>
+                                    <ul class="dropdown-menu keep-plant-dropdown-items">
+                                        <li><a class="dropdown-item keep-plant-item" name="กิโลกรัม" href="#">กิโลกรัม</a></li>
+                                        <li><a class="dropdown-item keep-plant-item" name="กรัม" href="#">กรัม</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-4 text-right">
+                                <h5>วันที่เก็บเกี่ยว:</h5>
+                            </div>
+                            <div class="col-8">
+                                <input id="inputdatepicker" class="datepicker" data-date-format="dd/mm/yyyy" readonly>
+                            </div>
+                        </div>
+                        </br>
+                        <input type="hidden" name="plant-type" id="plant-type" value="" >
+                        <input type="hidden" name="end-plant-timestamp" id="edn-plant-timestamp" value="" >
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="button" id="submit-plant"  class="btn btn-success">ตกลง</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--popup add compost-->
+    <div class="modal fade" id="add-compost-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ใส่ปุ๋ย</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="compost-form" action="plant/compost/" method="post">
+                        <div class="row">
+                            <div class="col-4 text-right">
+                                <h5>ชนิดปุ๋ย:</h5>
+                            </div>
+                            <div class="col-8">
+                                <div class="btn-group">
+                                    <button type="button" id="ch-compost" class="btn btn-primary dropdown-toggle compost-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="ชนิด A">ชนิด A</button>
+                                    <ul class="dropdown-menu compost-dropdown-items">
+                                        <li><a class="dropdown-item compost-item" name="ชนิด A" href="#">ชนิด A</a></li>
+                                        <li><a class="dropdown-item compost-item" name="ชนิด B" href="#">ชนิด B</a></li>
+                                        <li><a class="dropdown-item compost-item" name="ชนิด C" href="#">ชนิด C</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-4 text-right">
+                                <h5>จำนวนปุ๋ย:</h5>
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" name="compost-total" type="number">
+                            </div>
+                            <div class="col-4">
+                                <div class="btn-group">
+                                    <button type="button" id="ch-add-compost" class="btn btn-primary dropdown-toggle compost-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="กิโลกรัม">กิโลกรัม</button>
+                                    <ul class="dropdown-menu compost-dropdown-items">
+                                        <li><a class="dropdown-item add-compost-item" name="กิโลกรัม" href="#">กิโลกรัม</a></li>
+                                        <li><a class="dropdown-item add-compost-item" name="กรัม" href="#">กรัม</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-4 text-right">
+                                <h5>วันที่ใส่ปุ๋ย:</h5>
+                            </div>
+                            <div class="col-8">
+                                <input id="inputdatepicker-compost" class="datepicker" data-date-format="dd/mm/yyyy" readonly>
+                            </div>
+                        </div>
+                        </br>
+                        <input type="hidden" id="p_id" name="p_id" value="" >
+                        <input type="hidden" id="compost-type" name="compost-type" value="" >
+                        <input type="hidden" id="compost-date" name="compost-date" value="" >
+                        <input type="hidden" id="compost-unit" name="compost-unit" value="" >
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="button" id="submit-compost"  class="btn btn-success">ตกลง</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="show-plant-data" action="plant/view_compost/" method="post">
+        <input type="hidden" name="p_id" id="plant-data-id" value="" >
+        {% csrf_token %}
+    </form>
+    
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="{% static "js/main.js" %}"></script>
+    <script src="{% static "assets/libs/jquery/dist/jquery.min.js" %}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{% static "assets/libs/popper.js/dist/umd/popper.min.js" %}"></script>
+    <script src="{% static "assets/libs/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js" %}"></script>
+    <script src="{% static "assets/extra-libs/sparkline/sparkline.js" %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static "js/waves.js" %}"></script>
+    <!--Menu sidebar -->
+    <script src="{% static "js/sidebarmenu.js" %}"></script>
+    <!--Custom JavaScript -->
+    <script src="{% static "js/custom.min.js" %}"></script>
+    <!-- datepicker -->
+    <!--<script src="{% static "js/bootstrap3-3-7/bootstrap.js" %}"></script>-->
+    <script src="{% static "js/datepicker/bootstrap-datepicker-custom.js" %}"></script>
+    <script src="{% static "js/bootstrap-datepicker.th.min.js" %}" charset="UTF-8"></script>
+    <!-- microgear -->
+    <script src="https://cdn.netpie.io/microgear.js"></script>
+    <script src="{% static "js/config_firebase.js" %}"></script>
+    <script>
+    
+      const APPID = "ValveSmartFarm";
+      const KEY = "MJjliNMzT6ERVhJ";
+      const SECRET = "KnHKiImxu4ME4M2mClrwpiFjB";
+    
+      const ALIAS = "LekoSmartFarmServer";  
+      const thing1 = "LekoSmartFarmNode";                                 
+    
+      function switchPress1(logic){
+        if(logic == '1' ){
+          microgear.chat(thing1,"ON1");
+        }else if(logic == '0' ){
+          microgear.chat(thing1,"OFF1");
+        }
+      }
+      function switchPress2(logic){
+        if(logic == '1' ){
+          microgear.chat(thing1,"ON2");
+        }else if(logic == '0' ){
+          microgear.chat(thing1,"OFF2");
+        }
+      }
+    
+      var microgear = Microgear.create({
+        key: KEY,
+        secret: SECRET,
+        alias : ALIAS
+      });
+      
+      microgear.on('message', function(topic,data) {
+        if(data=="ON1"){
+          status = "on";
+          v = '1';
+        }else if(data=="OFF1"){
+          status = "off"; 
+          v= '1';
+        }
+        else if(data=="ON2"){
+          status = "on"; 
+          v='2';
+        }
+        else if(data=="OFF2"){
+          status = "off"; 
+          v= '2';
+        }
+        $.ajax({
+            url: '/valve_state/',
+            data: {
+              'valve': v,
+              'status': status
+            },
+            dataType: 'json'
+          });
+      });
+    
+      microgear.on('connected', function() {
+        microgear.setAlias(ALIAS);
+      });
+    
+      microgear.on('present', function(event) {
+        console.log(event);
+      });
+    
+      microgear.on('absent', function(event) {
+        console.log(event);
+      });
+    
+      microgear.resettoken(function(err) {
+        microgear.connect(APPID);
+      });
+
+    $(document).ready(function() {
+        var status
+        $('#sensor_control').click(function() {
+            if($(this).attr("aria-pressed")=='true'){
+                switchPress1(0);
+            }else{
+                switchPress1(1);
+            }
+        });
+        $('#sensor_control2').click(function() {
+            if($(this).attr("aria-pressed")=='true'){
+                switchPress2(0);
+            }else{
+                switchPress2(1);
+            }
+        });
+        $(".plant-item").click(function(){
+            $("#ch-plant").html($(this).attr("name"))
+            $("#ch-plant").val($(this).attr("name"))
+        })
+        $(".keep-plant-item").click(function(){
+            $("#ch-keep").html($(this).attr("name"))
+            $("#ch-keep").val($(this).attr("name"))
+        })
+        $(".sensor-item").click(function(){
+            $("#ch-sensor").html($(this).attr("name"))
+            $("#ch-sensor").val($(this).attr("name"))
+        })
+        $(".compost-item").click(function(){
+            $("#ch-compost").html($(this).text())
+            $("#ch-compost").val($(this).attr("name"))
+        })
+        $(".add-compost-item").click(function(){
+            $("#ch-add-compost").html($(this).text())
+            $("#ch-add-compost").val($(this).attr("name"))
+        })
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            todayHighlight: true,
+            todayBtn: false,
+            language: 'th', 
+            thaiyear: true              
+        }).datepicker("setDate", "0"); 
+        $(".compost-button").click(function(){
+            $("#p_id").val($(this).val())
+        })
+        $("#submit-plant").click(function(){
+            $("#plant-type").val($("#ch-plant").val())
+            $("#start-plant-timestamp").val($("#inputdatepicker").val())
+            $("#sensor").val($("#ch-sensor").val())
+            $("#plant-form").submit()
+        })
+        $("#submit-compost").click(function(){
+            $("#compost-date").val($("#inputdatepicker-compost").val())
+            $("#compost-type").val($("#ch-compost").val())
+            $("#compost-unit").val($("#ch-add-compost").val())
+            $("#compost-form").submit()
+        })
+        $(".plant-data").click(function(){
+            $("#plant-data-id").val($(this).attr("id"))
+            // alert($("#plant-data-id").val())
+            $("#show-plant-data").submit()
+        })
+        document.getElementById("tab2").classList.remove('active');
+        document.getElementById("tab3").classList.remove('active');
+        document.getElementById("tab4").classList.remove('active');
+    });
+        
+    firebase.initializeApp(config_firebase);
+    var database = firebase.database();
+    
+    var x_air_humidity = "{{x_air_humidity}}"
+    var x_air_temperature = "{{x_air_temperature}}"
+    var x_soil_moisure = "{{x_soil_moisure}}"
+    var x_soil_temperature = "{{x_soil_temperature}}"
+    
+    var a_air_humidity = "{{a_air_humidity}}"
+    var a_air_temperature = "{{a_air_temperature}}"
+    var a_soil_moisure = "{{a_soil_moisure}}"
+    var a_soil_temperature = "{{a_soil_temperature}}"
+    
+    var b_air_humidity = "{{b_air_humidity}}"
+    var b_air_temperature = "{{b_air_temperature}}"
+    var b_soil_moisure = "{{b_soil_moisure}}"
+    var b_soil_temperature = "{{b_soil_temperature}}"
+    
+    var c_air_humidity = "{{c_air_humidity}}"
+    var c_air_temperature = "{{c_air_temperature}}"
+    var c_soil_moisure = "{{c_soil_moisure}}"
+    var c_soil_temperature = "{{c_soil_temperature}}"
+    </script>
+    <script src="{% static "js/meter.js" %}"></script>
+</body>
+
+</html>
