@@ -176,7 +176,35 @@ def control(request):
     
 
 def history(request):
-    return render(request,"history.html")
+    _p = Plant.objects.filter(is_harvested=True)
+    return render(request,"history.html", {"plant":_p})
+    
+def view_history(request):
+    _p = Plant.objects.filter(is_harvested=True)
+    p_data = []
+    for i in _p:
+        di = {}
+        di["start_date"] = i.start_plant_timestamp.strftime("%d/%m/%Y")
+        di["end_date"] = i.end_plant_timestamp.strftime("%d/%m/%Y")
+        di["plant_type"] = i.plant_type
+        di["sensor"] = i.sensor
+        di["id"] = i.id
+        p_data.append(di)
+    _c = Compost.objects.all()
+    c_data = []
+    i=1
+    for v in _c:
+        di = {}
+        di["id"] = v.pk
+        di["number"] = i
+        di["date"] = v.compost_date.strftime("%d/%m/%Y")
+        di["type"] = v.compost_type
+        di["totals"] = str(v.compost_total) + " " + v.compost_unit
+        di["total"] = v.compost_total
+        di["unit"] = v.compost_unit
+        c_data.append(di)
+        i= i+1
+    return render(request,"view_history.html", {"plant":p_data, "compost":json.dumps(c_data)})
     
 def meter(request):
     refA = db.reference('A')
@@ -211,7 +239,6 @@ def view_compost(request, id):
         di["unit"] = v.compost_unit
         c_data.append(di)
         i= i+1
-    print(c_data)
     
     return render(request, "view_compost.html", {"compost": c_data , "plant":_p ,"c_js": json.dumps(c_data)})
     

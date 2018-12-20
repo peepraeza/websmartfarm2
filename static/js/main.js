@@ -20,6 +20,26 @@ function searchPlant() {
   }
 }
 
+function searchKeepPlant() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search_plant2");
+  var filter = input.value.toLowerCase();
+  filter = input.value.toUpperCase();
+  table = document.getElementById("show-keep");
+  ul = table.getElementsByClassName("history-item");
+  for (i = 0; i < ul.length; i++) {
+    p = ul[i].getElementsByClassName("plant-history");
+    if (p) {
+      txtValue1 = p.name;
+      if (txtValue1.toUpperCase().indexOf(filter) > -1) {
+        ul[i].style.display = "";
+      } else {
+        ul[i].style.display = "none";
+      }
+    }    
+  }
+}
+
 function searchPlantDrop(){
   var input = document.getElementById("search-dropdown-plant");
   var filter = input.value.toLowerCase();
