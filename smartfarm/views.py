@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from models import Plant, Vegetable, Compost
-from post_data import parse_keys, Plant_keys,parse_keys2, parse_keys3
+from post_data import parse_keys, Plant_keys,parse_keys2, parse_keys3, parse_keys4
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 import json
 from datetime import datetime, timedelta
 import time
+import requests
 
 # from django.utils import timezone
 
@@ -63,7 +64,7 @@ def index(request):
         c_soil_temperature = val["data"]["soil_temperature"]
         c_soil_moisure = val["data"]["soil_moisure"]
     _v = Vegetable.objects.all()
-    _p = Plant.objects.all()
+    _p = Plant.objects.filter(is_harvested=False)
     p_data = []
     for i in _p:
         di = {}
@@ -194,9 +195,9 @@ def view_vegetable(request):
     _v = Vegetable.objects.all()
     return render(request, "view_vegetable.html", {"vegs": _v})
     
-def view_compost(request):
-    p_id = int(request.POST.get("p_id"))
-    _c = Compost.objects.filter(plant_id=p_id)
+def view_compost(request, id):
+    _c = Compost.objects.filter(plant_id=id)
+    _p = Plant.objects.get(pk=id)
     c_data = []
     i=1
     for v in _c:
@@ -205,11 +206,14 @@ def view_compost(request):
         di["number"] = i
         di["date"] = v.compost_date.strftime("%d/%m/%Y")
         di["type"] = v.compost_type
-        di["total"] = str(v.compost_total) + " " + v.compost_unit
+        di["totals"] = str(v.compost_total) + " " + v.compost_unit
+        di["total"] = v.compost_total
+        di["unit"] = v.compost_unit
         c_data.append(di)
         i= i+1
+    print(c_data)
     
-    return render(request, "view_compost.html", {"compost": c_data})
+    return render(request, "view_compost.html", {"compost": c_data , "plant":_p ,"c_js": json.dumps(c_data)})
     
 def new_vegetable(request):
     return render(request, "new_vegetable.html")
@@ -241,12 +245,20 @@ def add_compost(request):
         parsed_val = parse_keys3(p_id, c_date, c_type, c_total, c_unit)
         _c = Compost(**parsed_val)
         _c.save()
-    return redirect("/")
+    html = "/plant/view_compost/"+str(p_id)+"/"
+    return redirect(html)
     
 def del_vegetable(request):
     ids = json.loads(request.POST.get("delete-ids"))
     Vegetable.objects.filter(pk__in=ids).delete()
     return redirect("/vegetables/view/")
+    
+def del_compost(request):
+    p_id = int(request.POST.get("p_id"))
+    ids = json.loads(request.POST.get("delete-ids"))
+    Compost.objects.filter(pk__in=ids).delete()
+    html = "/plant/view_compost/"+str(p_id)+"/"
+    return redirect(html)
     
 def del_plant(request):
     id = int(request.POST.get("delete-id"))
@@ -258,6 +270,29 @@ def edit_vegetable(request, id):
     return render(request, "edit_vegetable.html", {
         "v": _v,
     })
+def edit_compost(request):
+    id = int(request.POST.get("c_id"))
+    p_id = request.POST.get("p_id")
+    time = str(request.POST.get("compost-date")) 
+    c_date = datetime.strptime(time, '%d/%m/%Y')
+    c_type = request.POST.get("compost-type")
+    c_total = request.POST.get("compost-total")
+    c_unit = request.POST.get("compost-unit")
+    parsed_val = parse_keys3(p_id, c_date, c_type, c_total, c_unit)
+    Compost.objects.filter(pk=id).update(**parsed_val)
+    html = "/plant/view_compost/"+str(p_id)+"/"
+    return redirect(html)
+    
+def keep_plant(request):
+    if request.method == "POST":
+        id = int(request.POST.get("p_id"))
+        time = str(request.POST.get("keep-date")) 
+        date = datetime.strptime(time, '%d/%m/%Y')
+        total = request.POST.get("keep-total")
+        unit = request.POST.get("keep-unit")
+        parsed_val = parse_keys4(date, total, unit)
+        Plant.objects.filter(pk=id).update(**parsed_val)
+    return redirect("/")
     
 def update_vegetable(request):
     id = int(request.POST.get("id"))

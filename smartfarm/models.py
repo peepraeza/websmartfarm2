@@ -20,6 +20,8 @@ Vegetables that are being planted in the farm
 """
 class Plant(models.Model):
     plant_type = models.CharField(max_length=200)
+    keep_total = models.IntegerField()
+    keep_unit = models.CharField(max_length=30)
     sensor = models.CharField(max_length=200)
     start_plant_timestamp = models.DateTimeField()
     end_plant_timestamp = models.DateTimeField()

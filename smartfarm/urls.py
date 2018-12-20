@@ -33,9 +33,12 @@ urlpatterns = [
     url(r'^vegetables/update/', views.update_vegetable),
     url(r'^vegetables/edit/(?P<id>[0-9]+)', views.edit_vegetable),
     url(r'^plant/add/', views.add_plant),
+    url(r'^plant/keep/', views.keep_plant),
     url(r'^plant/compost/', views.add_compost),
-    url(r'^plant/view_compost', views.view_compost),
+    url(r'^plant/edit_compost', views.edit_compost),
+    url(r'^plant/view_compost/(?P<id>[0-9]+)', views.view_compost),
     url(r'^plant/delete/', views.del_plant),
+    url(r'^plant/delete_compost/', views.del_compost),
     url(r'^valve/', views.valve),
     url(r'^valve_state/', views.valve_state),
 ]

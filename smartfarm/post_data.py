@@ -18,8 +18,18 @@ def parse_keys2(p_type, time, sensor):
     _res_dict["plant_type"] = str(p_type.encode('utf-8'))
     _res_dict["start_plant_timestamp"] = str(time)
     _res_dict["end_plant_timestamp"] = str(time)
-    _res_dict["sensor"] = str(sensor).encode('utf-8')
+    _res_dict["sensor"] = str(sensor.encode('utf-8'))
+    _res_dict["keep_total"] = 0
+    _res_dict["keep_unit"] = "none"
     _res_dict["is_harvested"] = False
+    return _res_dict
+    
+def parse_keys4(date, total, unit):
+    _res_dict = {}
+    _res_dict["end_plant_timestamp"] = str(date)
+    _res_dict["keep_total"] = int(total)
+    _res_dict["keep_unit"] = str(unit.encode("utf-8"))
+    _res_dict["is_harvested"] = True
     return _res_dict
     
 def parse_keys3(p_id, c_date, c_type, c_total, c_unit):
