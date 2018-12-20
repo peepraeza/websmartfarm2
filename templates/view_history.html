@@ -166,7 +166,7 @@
                                         <tr>
                                             <th>
                                                 <label class="customcheckbox">
-                                                    <input type="checkbox" id="plant-edit-cb-{{ p.pk }}" class="listCheckbox plant-edit-cb" value="{{ p.pk }}" />
+                                                    <input type="checkbox" id="plant-edit-cb-{{ p.id }}" class="listCheckbox plant-edit-cb" value="{{ p.id }}" />
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </th>
@@ -174,13 +174,13 @@
                                             <td>{{ p.plant_type }}</td>
                                             <td>{{ p.start_date }}</td>
                                             <td>{{ p.end_date }}</td>
-                                            <td><a href="#" data-toggle="modal" data-target="#compost-history">ดูข้อมูล</a></td>
+                                            <td><a class="see-history" href="#" data-toggle="modal" data-target="#compost-history" name="{{ p.id }}">ดูข้อมูล</a></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
-                            <button id="delete-bar-2" data-toggle="modal" data-target="#delete-plant" class="btn btn-danger delete-bar">ลบข้อมูล</button>
+                            <button id="delete-bar-2" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger delete-bar">ลบข้อมูล</button>
                         </div>
                     </div>
                 </div>
@@ -195,63 +195,14 @@
         <!-- ============================================================== -->
     </div>
     <div style="height: 50px" class="mobileindex"></div>
-    <div id="delete-bar-1" class="delete-bar" data-toggle="modal" data-target="#delete-plant">
+    <div id="delete-bar-1" class="delete-bar" data-toggle="modal" data-target="#delete-modal">
         ลบข้อมูล
         <form id="delete-form" action="#" method="post">
             <input type="hidden" name="delete-ids" id="delete-ids" value="[]" >
             {% csrf_token %}
         </form>
     </div>
-    <div class="modal fade" id="delete-plant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ยืนยันการลบข้อมูล</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="show-delete">
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="button" id="submit-delete" class="btn btn-success">ตกลง</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="compost-history" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ข้อมูลการใส่ปุ๋ย</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="show-compost-history">
-                    <div class="table-responsive">
-                        <table class="table table-plant">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">ครั้งที่</th>
-                                    <th scope="col">วันที่</th>
-                                    <th scope="col">ชนิด</th>
-                                    <th scope="col">จำนวน</th>
-                                </tr>
-                            </thead>
-                            <tbody class="customtable" >
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include "modals.html" %}
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
@@ -328,6 +279,19 @@
                 }
                 $("#show-delete").html("คุณต้องการที่จะลบพืช "+remove_list.length+" ชนิด ใช่หรือไม่ ?")
                 $("#delete-ids").val(JSON.stringify(remove_list))
+            })
+            $(".see-history").click(function(){
+                compost = JSON.parse("{{ compost | escapejs }}");
+                for(var i=0;i<compost.length;i++){
+                    if(parseInt(compost[i].p_id) == parseInt($(this).attr("name"))){
+                        var c_num = compost[i].number
+                        var c_type = compost[i].type
+                        var c_date = compost[i].date
+                        var c_total = compost[i].totals
+                        var markup = "<tr><td>"+c_num+"</td><td>"+c_date+"</td><td>" + c_type + "</td><td>" + c_total + "</td></tr>";
+                        $("#show-compost-table tbody").append(markup);
+                    }
+                }
             })
             $("#submit-delete").click(function(){
                 $("#delete-form").submit()

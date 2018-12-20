@@ -196,6 +196,7 @@ def view_history(request):
     for v in _c:
         di = {}
         di["id"] = v.pk
+        di["p_id"] = v.plant_id
         di["number"] = i
         di["date"] = v.compost_date.strftime("%d/%m/%Y")
         di["type"] = v.compost_type
@@ -204,6 +205,7 @@ def view_history(request):
         di["unit"] = v.compost_unit
         c_data.append(di)
         i= i+1
+    
     return render(request,"view_history.html", {"plant":p_data, "compost":json.dumps(c_data)})
     
 def meter(request):
