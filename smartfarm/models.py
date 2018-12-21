@@ -1,14 +1,13 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.core.validators import MinValueValidator
 
 """
 Category of plants that are created by users
 """
 class Vegetable(models.Model):
     type_name = models.CharField(max_length=200)
-    duration = models.IntegerField(validators=MinValueValidator(0))
+    duration = models.IntegerField()
     create_record_timestamp = models.DateTimeField(default=timezone.now)
     description = models.TextField()
 
@@ -37,7 +36,7 @@ Category of plants that are created by users
 class Compost(models.Model):
     plant_id = models.IntegerField()
     compost_type = models.CharField(max_length=30)
-    compost_total = models.IntegerField(validators=MinValueValidator(0)) 
+    compost_total = models.IntegerField() 
     compost_unit = models.CharField(max_length=30)
     compost_date = models.DateTimeField(default=timezone.now)
     create_record_timestamp = models.DateTimeField(default=timezone.now)

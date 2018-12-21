@@ -125,8 +125,8 @@ def index(request):
         "c_soil_moisure": c_soil_moisure,
     })
     
-def t_login(request):
-    return(request, "login.html")
+def login(request):
+    return render(request, "login.html")
 
 def control(request):
     refX = db.reference('X')

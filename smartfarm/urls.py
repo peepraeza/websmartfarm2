@@ -43,5 +43,5 @@ urlpatterns = [
     url(r'^plant/delete_compost/', views.del_compost),
     url(r'^valve/', views.valve),
     url(r'^valve_state/', views.valve_state),
-    url(r'^t_login/', views.t_login),
+    url(r'^login/', views.login),
 ]
