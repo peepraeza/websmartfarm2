@@ -271,10 +271,10 @@
                                             <p id = "nodestate">สถานะ : กำลังอัพเดต..</p>
                                         </div>
                                         <div class="col-6">
-                                            
                                             <div class="text-right">
-                                                
-                                                <p class="breadcrumb-item"><button type="button" class="btn btn-danger btn-sm">ตั้งเวลา</button></p>
+                                                <nav aria-label="breadcrumb">
+                                                    <button type="button" class="breadcrumb-item btn btn-danger btn-sm" data-toggle="modal" data-target="#timesetting-modal"><a style="text-decorations:none; color:inherit;" href= "#" >ตั้งเวลา</a></button>
+                                                </nav>
                                             </div>
                                         </div>
                                     </div>
@@ -364,13 +364,9 @@
                                             
                                         </div>
                                         <div class="tetx-right">
-                                            <form id="delete-form" action="/plant/delete/" method="post">
-                                                <input type="hidden" name="delete-id" value="{{ p.id }}">
-                                                <button type="submit" class="close" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            {% csrf_token %}
-                                            </form>
+                                            <a href="#">
+                                                <span aria-hidden="true" class="delete-plant-span" data-toggle="modal" data-target="#delete-plant" name="{{ p.id }}">&times;</span>
+                                            </a>
                                         </div>
                                     </li>
                                     {% endfor %}
@@ -428,9 +424,32 @@
             </div>
         </footer>
     </div>
+    <form id="delete-form" action="/plant/delete/" method="post">
+        <input type="hidden" class="delete-id" name="delete-id" value="">
+    {% csrf_token %}
+    </form>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
+    <div class="modal fade" id="delete-plant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ยืนยันการลบข้อมูล</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="show-delete">
+                    คุณต้องการลบข้อมูล ใช่หรือไม่ ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="button" id="submit-delete-plant" class="btn btn-success submit-delete">ตกลง</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="plant-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -551,6 +570,67 @@
         </div>
     </div>
     
+    <!--popup time setting-->
+    <div class="modal fade" id="timesetting-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ตั้งเวลา</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="plant-form" action="/plant/add/" method="post">
+                        <div class="row">
+                            <div class="col-3 text-right">
+                                <h5>เวลาเปิดวาล์ว:</h5>
+                            </div>
+                            <div class="col-5">
+                                
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-3 text-right">
+                                <h5>เวลาปิดวาล์ว:</h5>
+                            </div>
+                            <div class="col-5">
+                                <input type="text" value="" name="type-name" class="form-control" autocomplete="off" required>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-3 text-right">
+                                <h5>เซ็นเซอร์:</h5>
+                            </div>
+                            <div class="col-9">
+                                <div class="btn-group">
+                                    <button type="button" id="ch-sensor" class="btn btn-primary dropdown-toggle sensor-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="ตู้คอนโทรล">ตู้คอนโทรล</button>
+                                    <ul class="dropdown-menu sensor-dropdown-items">
+                                        <li><a class="dropdown-item sensor-item" name="ตู้คอนโทรล" href="#">ตู้คอนโทรล</a></li>
+                                        <li><a class="dropdown-item sensor-item" name="ตู้กลางแปลง" href="#">ตู้กลางแปลง</a></li>
+                                        <li><a class="dropdown-item sensor-item" name="ตู้ต้นแปลง" href="#">ตู้ต้นแปลง</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="plant-type" id="plant-type" value="" >
+                        <input type="hidden" name="start-plant-timestamp" id="start-plant-timestamp" value="" >
+                        <input type="hidden" name="end-plant-timestamp" id="end-plant-timestamp" value="" >
+                        <input type="hidden" name="sensor" id="sensor" value="" >
+                        <input type="hidden" name="is-harvested" id="is-harvested" value="" >
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="button" id="submit-plant"  class="btn btn-success">ตกลง</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
@@ -609,20 +689,28 @@
           status = "on";
           v = '1';
           $("#led1").css("background-color", "#0F0");
+          $("#sensor_control").attr("aria-pressed", "true")
+          document.getElementById("sensor_control").classList.add('active');
         }else if(data=="OFF1"){
           status = "off"; 
           v= '1';
           $("#led1").css("background-color", "#080");
+          $("#sensor_control").attr("aria-pressed", "false")
+          document.getElementById("sensor_control").classList.remove('active');
         }
         else if(data=="ON2"){
           status = "on"; 
           v='2';
           $("#led2").css("background-color", "#0F0");
+          $("#sensor_control2").attr("aria-pressed", "true")
+          document.getElementById("sensor_control2").classList.add('active');
         }
         else if(data=="OFF2"){
           status = "off"; 
           v= '2';
           $("#led2").css("background-color", "#080");
+          $("#sensor_control2").attr("aria-pressed", "false")
+          document.getElementById("sensor_control2").classList.remove('active');
         }
         $.ajax({
             url: '/valve_state/',
@@ -705,6 +793,12 @@
             $("#keep-date").val($("#inputdatepicker-keep").val())
             $("#keep-unit").val($("#ch-keep").val())
             $("#keep-plant-form").submit()
+        })
+        $(".delete-plant-span").click(function(){
+            $(".delete-id").val($(this).attr("name"))
+        })
+        $(".submit-delete").click(function(){
+            $("#delete-form").submit()
         })
         document.getElementById("tab2").classList.remove('active');
         document.getElementById("tab3").classList.remove('active');

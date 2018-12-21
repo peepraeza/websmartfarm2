@@ -122,7 +122,7 @@
              <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">เซ็นเซอร์</h4>
+                        <h4 class="page-title">ควบคุมวาล์ว</h4>
                         <div class="ml-auto text-right plant">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -130,6 +130,9 @@
                                 </ol>
                             </nav>
                         </div>
+                    </div>
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <p id = "nodestate">สถานะ : กำลังอัพเดต..</p>
                     </div>
                 </div>
             </div>
@@ -252,20 +255,28 @@
           status = "on";
           v = '1';
           $("#led1").css("background-color", "#0F0");
+          $("#sensor_control").attr("aria-pressed", "true")
+          document.getElementById("sensor_control").classList.add('active');
         }else if(data=="OFF1"){
           status = "off"; 
           v= '1';
           $("#led1").css("background-color", "#080");
+          $("#sensor_control").attr("aria-pressed", "false")
+          document.getElementById("sensor_control").classList.remove('active');
         }
         else if(data=="ON2"){
           status = "on"; 
           v='2';
           $("#led2").css("background-color", "#0F0");
+          $("#sensor_control2").attr("aria-pressed", "true")
+          document.getElementById("sensor_control2").classList.add('active');
         }
         else if(data=="OFF2"){
           status = "off"; 
           v= '2';
           $("#led2").css("background-color", "#080");
+          $("#sensor_control2").attr("aria-pressed", "false")
+          document.getElementById("sensor_control2").classList.remove('active');
         }
         $.ajax({
             url: '/valve_state/',
@@ -283,6 +294,14 @@
       });
     
       microgear.on('present', function(event) {
+          console.log(event);
+        if (event.alias == "LekoSmartFarmNode"){
+            if(event.type == "online"){
+                document.getElementById("nodestate").innerHTML = "สถานะ : พร้อมใช้งาน";
+            }else if(event.type == "offline"){
+                document.getElementById("nodestate").innerHTML = "สถานะ : ยังไม่พร้อมใช้งาน";
+            }
+        }
       });
     
       microgear.on('absent', function(event) {
