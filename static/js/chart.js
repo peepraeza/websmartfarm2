@@ -25,7 +25,7 @@ var config1 = {
 	type: 'line',
 	data: {
 		datasets: [{
-			label: 'โหนดX',
+			label: 'ตู้นอกแปลง',
 			backgroundColor: color1(chartColors.red).alpha(0.5).rgbString(),
 			borderColor: chartColors.red,
 			fill: true,
@@ -33,7 +33,7 @@ var config1 = {
 			data: []
         }
         , {
-			label: 'โหนดA',
+			label: 'ตู้คอนโทรล',
 			backgroundColor: color1(chartColors.blue).alpha(0.5).rgbString(),
 			borderColor: chartColors.blue,
 			fill: true,
@@ -41,7 +41,7 @@ var config1 = {
 			data: []
         },
         {
-			label: 'โหนดB',
+			label: 'ตู้กลางแปลง',
 			backgroundColor: color1(chartColors.green).alpha(0.5).rgbString(),
 			borderColor: chartColors.green,
 			fill: true,
@@ -49,7 +49,7 @@ var config1 = {
 			data: []
         },
         {
-			label: 'โหนดC',
+			label: 'ตู้ต้นแปลง',
 			backgroundColor: color1(chartColors.purple).alpha(0.5).rgbString(),
 			borderColor: chartColors.purple,
 			fill: true,
@@ -121,7 +121,7 @@ var config2 = {
 	type: 'line',
 	data: {
 		datasets: [{
-			label: 'โหนดX',
+			label: 'ตู้นอกแปลง',
 			backgroundColor: color2(chartColors.red).alpha(0.5).rgbString(),
 			borderColor: chartColors.red,
 			fill: true,
@@ -129,7 +129,7 @@ var config2 = {
 			data: []
         }
         , {
-			label: 'โหนดA',
+			label: 'ตู้คอนโทรล',
 			backgroundColor: color2(chartColors.blue).alpha(0.5).rgbString(),
 			borderColor: chartColors.blue,
 			fill: true,
@@ -137,7 +137,7 @@ var config2 = {
 			data: []
         },
         {
-			label: 'โหนดB',
+			label: 'ตู้กลางแปลง',
 			backgroundColor: color2(chartColors.green).alpha(0.5).rgbString(),
 			borderColor: chartColors.green,
 			fill: true,
@@ -145,7 +145,7 @@ var config2 = {
 			data: []
         },
         {
-			label: 'โหนดC',
+			label: 'ตู้ต้นแปลง',
 			backgroundColor: color2(chartColors.purple).alpha(0.5).rgbString(),
 			borderColor: chartColors.purple,
 			fill: true,
@@ -217,7 +217,7 @@ var config3 = {
 	type: 'line',
 	data: {
 		datasets: [{
-			label: 'โหนดX',
+			label: 'ตู้นอกแปลง',
 			backgroundColor: color3(chartColors.red).alpha(0.5).rgbString(),
 			borderColor: chartColors.red,
 			fill: true,
@@ -225,7 +225,7 @@ var config3 = {
 			data: []
         }
         , {
-			label: 'โหนดA',
+			label: 'ตู้คอนโทรล',
 			backgroundColor: color3(chartColors.blue).alpha(0.5).rgbString(),
 			borderColor: chartColors.blue,
 			fill: true,
@@ -233,7 +233,7 @@ var config3 = {
 			data: []
         },
         {
-			label: 'โหนดB',
+			label: 'ตู้กลางแปลง',
 			backgroundColor: color3(chartColors.green).alpha(0.5).rgbString(),
 			borderColor: chartColors.green,
 			fill: true,
@@ -241,7 +241,7 @@ var config3 = {
 			data: []
         },
         {
-			label: 'โหนดC',
+			label: 'ตู้ต้นแปลง',
 			backgroundColor: color3(chartColors.purple).alpha(0.5).rgbString(),
 			borderColor: chartColors.purple,
 			fill: true,
@@ -313,7 +313,7 @@ var config4 = {
 	type: 'line',
 	data: {
 		datasets: [{
-			label: 'โหนดX',
+			label: 'ตู้นอกแปลง',
 			backgroundColor: color4(chartColors.red).alpha(0.5).rgbString(),
 			borderColor: chartColors.red,
 			fill: true,
@@ -321,7 +321,7 @@ var config4 = {
 			data: []
         }
         , {
-			label: 'โหนดA',
+			label: 'ตู้คอนโทรล',
 			backgroundColor: color4(chartColors.blue).alpha(0.5).rgbString(),
 			borderColor: chartColors.blue,
 			fill: true,
@@ -329,7 +329,7 @@ var config4 = {
 			data: []
         },
         {
-			label: 'โหนดB',
+			label: 'ตู้กลางแปลง',
 			backgroundColor: color4(chartColors.green).alpha(0.5).rgbString(),
 			borderColor: chartColors.green,
 			fill: true,
@@ -337,7 +337,7 @@ var config4 = {
 			data: []
         },
         {
-			label: 'โหนดC',
+			label: 'ตู้ต้นแปลง',
 			backgroundColor: color4(chartColors.purple).alpha(0.5).rgbString(),
 			borderColor: chartColors.purple,
 			fill: true,

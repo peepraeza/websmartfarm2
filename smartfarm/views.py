@@ -30,7 +30,7 @@ firebase_admin.initialize_app(cred, {
     'databaseURL' : 'https://smart-farm-27e2b.firebaseio.com/'
 })
 
-
+    
 def index(request):
     refX = db.reference('X')
     resultX = refX.order_by_child('time').limit_to_last(1).get()
@@ -124,6 +124,9 @@ def index(request):
         "c_soil_temperature": c_soil_temperature,
         "c_soil_moisure": c_soil_moisure,
     })
+    
+def t_login(request):
+    return(request, "login.html")
 
 def control(request):
     refX = db.reference('X')
