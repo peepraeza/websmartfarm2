@@ -177,10 +177,21 @@ def control(request):
 
 def history(request):
     _p = Plant.objects.filter(is_harvested=True)
-    return render(request,"history.html", {"plant":_p})
+    _v = Vegetable.objects.all()
+    data = []
+    for i in _p:
+        data.append(i.plant_type)
+    data = set(data)
+        
+    return render(request,"history.html", {"plant":_p, "vegs":_v, "dataset":data})
     
 def view_history(request):
-    _p = Plant.objects.filter(is_harvested=True)
+    p_t = request.POST.get("p_t")
+    print(p_t)
+    if(p_t == "all"):
+        _p = Plant.objects.all()
+    else:
+        _p = Plant.objects.filter(is_harvested=True, plant_type=p_t)
     p_data = []
     for i in _p:
         di = {}
@@ -189,6 +200,7 @@ def view_history(request):
         di["plant_type"] = i.plant_type
         di["sensor"] = i.sensor
         di["id"] = i.id
+        di["totals"] = str(i.keep_total)+" "+i.keep_unit
         p_data.append(di)
     _c = Compost.objects.all()
     c_data = []
@@ -206,7 +218,7 @@ def view_history(request):
         c_data.append(di)
         i= i+1
     
-    return render(request,"view_history.html", {"plant":p_data, "compost":json.dumps(c_data)})
+    return render(request,"view_history.html", {"p_t":p_t ,"plant":p_data, "compost":json.dumps(c_data)})
     
 def meter(request):
     refA = db.reference('A')
@@ -276,6 +288,12 @@ def add_compost(request):
         _c.save()
     html = "/plant/view_compost/"+str(p_id)+"/"
     return redirect(html)
+
+def del_history(request):
+    v_id = request.POST.get("p_t")
+    ids = json.loads(request.POST.get("delete-ids"))
+    Plant.objects.filter(pk__in=ids).delete()
+    return redirect("/history/")
     
 def del_vegetable(request):
     ids = json.loads(request.POST.get("delete-ids"))

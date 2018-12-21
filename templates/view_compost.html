@@ -1,497 +1,190 @@
 {% load staticfiles %}
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
+{% include "subtemp/heads.html" %}   
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static "assets/images/logoja-icon.png" %}">
-    <title>Control Valve</title>
-    <!-- Custom CSS -->
-    <link href="{% static "assets/libs/flot/css/float-chart.css" %}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{%static "assets/extra-libs/multicheck/multicheck.css" %}">
-    <link href="{%static "assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" %}" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="{% static "css/style.min.css" %}" rel="stylesheet">
-    <link href="{% static "css/button.css" %}" rel="stylesheet">
-    <link href="{% static "css/main.css" %}" rel="stylesheet">
-    <link href="{% static "css/datepicker/bootstrap-datepicker.css" %}" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    
-</head>
-
-<body>
     <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
     <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- Page wrapper  -->
     <!-- ============================================================== -->
-    <div id="main-wrapper">
+    <div class="page-wrapper">
         <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-        <header class="topbar" data-navbarbg="skin5">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header" data-logobg="skin5">
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light d-block d-md-none" href="/"><i class="fas fa-chevron-left"></i></a>
-                    <!-- ============================================================== -->
-                    <!-- Logo -->
-                    <!-- ============================================================== -->
-                    <a href = "/index/" class="navbar-brand">
-                        <!-- Logo icon -->
-                        <b class="logo-icon ">
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <img src="{% static "assets/images/logoja-icon.png" alt="homepage" %}" class="light-logo" />
-                           
-                        </b>
-                        <!--End Logo icon -->
-                         <!-- Logo text -->
-                        <span class="logo-text">
-                             <!-- dark Logo text -->
-                             <img src="{% static "assets/images/logoja-text.png" %}" alt="homepage" class="light-logo" />
-                            
-                        </span>
-                    </a>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Toggle which is visible on mobile only -->
-                    <!-- ============================================================== -->
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light"></a>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-left mr-auto">
-                        <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
-                    </ul>
-                   
-                </div>
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar" data-sidebarbg="skin5">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item selected"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">หน้าหลัก</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/vegetables/view/" aria-expanded="false"><i class="fas fa-database"></i><span class="hide-menu">ข้อมูลพืชผล</span></a></li>
-                        <li class="sidebar-item bar-mobile"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/graph/" aria-expanded="false"><i class="fas fa-chart-bar"></i><span class="hide-menu">กราฟ</span></a></li>
-                        <li class="sidebar-item bar-mobile"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/history/" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu">ประวัติ</span></a></li>
-                    
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-             <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">ประวัติการใส่ปุ๋ย</h4>
-                        <div class="ml-auto text-right">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><i class="fa fa-plus"></i><a href= "#" data-toggle="modal" data-target="#add-compost"> ใส่ปุ๋ย</a></li>
-                                </ol>
-                            </nav>
-                        </div>
+         <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">ประวัติการใส่ปุ๋ย</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><i class="fa fa-plus"></i><a href= "#" data-toggle="modal" data-target="#add-compost"> ใส่ปุ๋ย</a></li>
+                            </ol>
+                        </nav>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
             <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- Sales Cards  -->
             <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Sales Cards  -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="table-responsive">
-                                <table id="zero_config" class="table table-plant">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>
-                                                <label class="customcheckbox m-b-20">
-                                                    <input type="checkbox" id="mainCheckbox" />
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </th>
-                                            <th scope="col">ครั้งที่</th>
-                                            <th scope="col">วันที่</th>
-                                            <th scope="col">ชนิด</th>
-                                            <th scope="col">จำนวน</th>
-                                            <th scope="col">แก้ใข</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="customtable">
-                                        {% for c in compost %}
-                                        <tr>
-                                            <th>
-                                                <label class="customcheckbox">
-                                                    <input type="checkbox" id="compost-edit-cb-{{ c.id }}" class="listCheckbox compost-edit-cb" value="{{ c.id }}" />
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </th>
-                                            <td>{{ c.number }}</td>
-                                            <td>{{ c.date }}</td>
-                                            <td>{{ c.type }}</td>
-                                            <td>{{ c.totals }}</td>
-                                            <td><a class="show_edit" name="{{ c.number }}" href="#">แก้ไข</a></td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <button id="delete-bar-2" data-toggle="modal" data-target="#delete-compost" class="btn btn-danger delete-bar">ลบข้อมูล</button>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table id="zero_config" class="table table-plant">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>
+                                            <label class="customcheckbox m-b-20">
+                                                <input type="checkbox" id="mainCheckbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>
+                                        <th scope="col">ครั้งที่</th>
+                                        <th scope="col">วันที่</th>
+                                        <th scope="col">ชนิด</th>
+                                        <th scope="col">จำนวน</th>
+                                        <th scope="col">แก้ใข</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="customtable">
+                                    {% for c in compost %}
+                                    <tr>
+                                        <th>
+                                            <label class="customcheckbox">
+                                                <input type="checkbox" id="compost-edit-cb-{{ c.id }}" class="listCheckbox compost-edit-cb" value="{{ c.id }}" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>
+                                        <td>{{ c.number }}</td>
+                                        <td>{{ c.date }}</td>
+                                        <td>{{ c.type }}</td>
+                                        <td>{{ c.totals }}</td>
+                                        <td><a class="show_edit" name="{{ c.number }}" href="#">แก้ไข</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
+                        <button id="delete-bar-2" data-toggle="modal" data-target="#delete-compost" class="btn btn-danger delete-bar">ลบข้อมูล</button>
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            
         </div>
         <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
+        <!-- End Container fluid  -->
         <!-- ============================================================== -->
+        
     </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
     <div style="height: 50px" class="mobileindex"></div>
-    <div id="delete-bar-1" class="delete-bar" data-toggle="modal" data-target="#delete-compost">
+    <div id="delete-bar-1" class="delete-bar" data-toggle="modal" data-target="#delete-modal">
         ลบข้อมูล
         <form id="delete-form" action="/plant/delete_compost/" method="post">
             <input type="hidden" name="delete-ids" id="delete-ids" value="[]" >
-            <input type="hidden" name="p_id" value="{{ plant.pk }}" >
+            <input type="hidden" name="p_id" id="p_id" value="{{ plant.id }}" >
             {% csrf_token %}
         </form>
     </div>
-    <div class="modal fade" id="delete-compost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ยืนยันการลบข้อมูล</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="show-delete">
-                    คุณต้องการลบข้อมูล ใช่หรือไม่ ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="button" id="submit-delete" class="btn btn-success">ตกลง</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!--popup add compost-->
-    <div class="modal fade" id="add-compost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ใส่ปุ๋ย</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="compost-form-add" action="/plant/compost/" method="post">
-                        <div class="row">
-                            <div class="col-4 text-right">
-                                <h5>ชนิดปุ๋ย:</h5>
-                            </div>
-                            <div class="col-8">
-                                <div class="btn-group">
-                                    <button type="button" id="ch-compost" class="btn btn-primary dropdown-toggle compost-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="ชนิด A">ชนิด A</button>
-                                    <ul class="dropdown-menu compost-dropdown-items">
-                                        <li><a class="dropdown-item compost-item" name="ชนิด A" href="#">ชนิด A</a></li>
-                                        <li><a class="dropdown-item compost-item" name="ชนิด B" href="#">ชนิด B</a></li>
-                                        <li><a class="dropdown-item compost-item" name="ชนิด C" href="#">ชนิด C</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="row">
-                            <div class="col-4 text-right">
-                                <h5>จำนวนปุ๋ย:</h5>
-                            </div>
-                            <div class="col-4">
-                                <input class="form-control" name="compost-total" type="number">
-                            </div>
-                            <div class="col-4">
-                                <div class="btn-group">
-                                    <button type="button" id="ch-add-compost" class="btn btn-primary dropdown-toggle compost-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="กิโลกรัม">กิโลกรัม</button>
-                                    <ul class="dropdown-menu compost-dropdown-items">
-                                        <li><a class="dropdown-item add-compost-item" name="กิโลกรัม" href="#">กิโลกรัม</a></li>
-                                        <li><a class="dropdown-item add-compost-item" name="กรัม" href="#">กรัม</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="row">
-                            <div class="col-4 text-right">
-                                <h5>วันที่ใส่ปุ๋ย:</h5>
-                            </div>
-                            <div class="col-8">
-                                <input id="inputdatepicker-compost" class="datepicker" data-date-format="dd/mm/yyyy" readonly>
-                            </div>
-                        </div>
-                        </br>
-                        <input type="hidden" name="p_id" value="{{ plant.pk }}" >
-                        <input type="hidden" id="compost-type" name="compost-type" value="" >
-                        <input type="hidden" id="compost-date" name="compost-date" value="" >
-                        <input type="hidden" id="compost-unit" name="compost-unit" value="" >
-                        {% csrf_token %}
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="button" id="submit-compost1"  class="btn btn-success">ตกลง</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--popup edit compost-->
-    <div class="modal fade" id="edit-compost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ใส่ปุ๋ย</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="compost-form-edit" action="/plant/edit_compost" method="post">
-                        <div class="row">
-                            <div class="col-4 text-right">
-                                <h5>ชนิดปุ๋ย:</h5>
-                            </div>
-                            <div class="col-8">
-                                <div class="btn-group">
-                                    <button type="button" id="ch-compost2" class="btn btn-primary dropdown-toggle compost-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="ชนิด A">ชนิด A</button>
-                                    <ul class="dropdown-menu compost-dropdown-items">
-                                        <li><a class="dropdown-item compost-item" name="ชนิด A" href="#">ชนิด A</a></li>
-                                        <li><a class="dropdown-item compost-item" name="ชนิด B" href="#">ชนิด B</a></li>
-                                        <li><a class="dropdown-item compost-item" name="ชนิด C" href="#">ชนิด C</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="row">
-                            <div class="col-4 text-right">
-                                <h5>จำนวนปุ๋ย:</h5>
-                            </div>
-                            <div class="col-4">
-                                <input class="form-control" id="compost-total2" name="compost-total" type="number">
-                            </div>
-                            <div class="col-4">
-                                <div class="btn-group">
-                                    <button type="button" id="ch-add-compost2" class="btn btn-primary dropdown-toggle compost-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="กิโลกรัม">กิโลกรัม</button>
-                                    <ul class="dropdown-menu compost-dropdown-items">
-                                        <li><a class="dropdown-item add-compost-item" name="กิโลกรัม" href="#">กิโลกรัม</a></li>
-                                        <li><a class="dropdown-item add-compost-item" name="กรัม" href="#">กรัม</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="row">
-                            <div class="col-4 text-right">
-                                <h5>วันที่ใส่ปุ๋ย:</h5>
-                            </div>
-                            <div class="col-8">
-                                <input id="inputdatepicker-compost2" class="datepicker" data-date-format="dd/mm/yyyy" readonly>
-                            </div>
-                        </div>
-                        </br>
-                        <input type="hidden" id="c_id" name="c_id" value="" >
-                        <input type="hidden" name="p_id" value="{{ plant.pk }}" >
-                        <input type="hidden" id="compost-type2" name="compost-type" value="" >
-                        <input type="hidden" id="compost-date2" name="compost-date" value="" >
-                        <input type="hidden" id="compost-unit2" name="compost-unit" value="" >
-                        {% csrf_token %}
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="button" id="submit-compost2"  class="btn btn-success">ตกลง</button>
-                </div>
-            </div>
-        </div>
-    </div>
     
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="{% static "js/main.js" %}"></script>
-    <script src="{% static "assets/libs/jquery/dist/jquery.min.js" %}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="{% static "assets/libs/popper.js/dist/umd/popper.min.js" %}"></script>
-    <script src="{% static "assets/libs/bootstrap/dist/js/bootstrap.min.js" %}"></script>
-    <script src="{% static "assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js" %}"></script>
-    <script src="{% static "assets/extra-libs/sparkline/sparkline.js" %}"></script>
-    <!--Wave Effects -->
-    <script src="{% static "js/waves.js" %}"></script>
-    <!--Menu sidebar -->
-    <script src="{% static "js/sidebarmenu.js" %}"></script>
-    <!--Custom JavaScript -->
-    <script src="{% static "js/custom.min.js" %}"></script>
-    <!-- Charts js Files -->
-    <script src="{% static "assets/libs/flot/excanvas.js" %}"></script>
-    <script src="{% static "assets/libs/flot/jquery.flot.js" %}"></script>
-    <script src="{% static "assets/libs/flot/jquery.flot.pie.js" %}"></script>
-    <script src="{% static "assets/libs/flot/jquery.flot.time.js" %}"></script>
-    <script src="{% static "assets/libs/flot/jquery.flot.stack.js" %}"></script>
-    <script src="{% static "assets/libs/flot/jquery.flot.crosshair.js" %}"></script>
-    <script src="{% static "assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js" %}"></script>
+{% include "subtemp/ends.html" %}  
     
-    <!-- this page js -->
-    <script src="{% static "assets/extra-libs/multicheck/datatable-checkbox-init.js" %}"></script>
-    <script src="{% static "assets/extra-libs/multicheck/jquery.multicheck.js" %}"></script>
-    <script src="{% static "assets/extra-libs/DataTables/datatables.min.js" %}"></script>
-    <!-- datepicker -->
-    <!--<script src="{% static "js/bootstrap3-3-7/bootstrap.js" %}"></script>-->
-    <script src="{% static "js/datepicker/bootstrap-datepicker-custom.js" %}"></script>
-    <script src="{% static "js/bootstrap-datepicker.th.min.js" %}" charset="UTF-8"></script>
-    <script>
-        
-        $(document).ready(function(){
-            if($(".compost-edit-cb").length > 0){
-                shift_delete = function(){
-                    var cbs = $(".compost-edit-cb")
-                    var n_checked = 0
-                    for(var p = 0; p < cbs.length; p++){
-                        n_checked += cbs[p].checked
-                    }
-                    if(window.innerWidth <= 767){
-                        if(n_checked > 0){
-                            $("#delete-bar-1").css({top: window.innerHeight - 60, height: 60})
-                        }else{
-                            $("#delete-bar-1").css({top: window.innerHeight})
-                        }
-                    }else{
-                        if(n_checked > 0){
-                            $("#delete-bar-2").css({height: 50})
-                        }else{
-                            $("#delete-bar-2").css({height: 0})
-                        }
-                        $("#delete-bar-2").css({display: "block"})
-                    }
-                    console.log($("#delete-bar-2"))
-                }
-                $(".compost-edit-cb").click(shift_delete)
-                $("#mainCheckbox").click(shift_delete)
-            }
-            $(".delete-bar").click(function(){
+<script>
+    
+    $(document).ready(function(){
+        if($(".compost-edit-cb").length > 0){
+            shift_delete = function(){
                 var cbs = $(".compost-edit-cb")
-                remove_list = []
+                var n_checked = 0
                 for(var p = 0; p < cbs.length; p++){
-                    if(cbs[p].checked){
-                        remove_list.push(cbs[p].value)
-                    }
+                    n_checked += cbs[p].checked
                 }
-                $("#delete-ids").val(JSON.stringify(remove_list))
-            })
-            $("#submit-delete").click(function(){
-                $("#delete-form").submit()
-            })
-            $(".show_edit").click(function(){
-                c_id = parseInt($(this).attr("name"))-1
-                compost = JSON.parse("{{ c_js | escapejs }}");
-                $("#ch-compost2").html(compost[c_id].type)
-                $("#ch-compost2").val(compost[c_id].type)
-                $("#compost-total2").val(compost[c_id].total)
-                $("#ch-add-compost2").html(compost[c_id].unit)
-                $("#ch-add-compost2").val(compost[c_id].unit)
-                $("#inputdatepicker-compost2").val(compost[c_id].date)
-                
-                $("#c_id").val(compost[c_id].id)
-                
-                $("#edit-compost").modal('show');
-            })
-            $(".compost-item").click(function(){
-                $("#ch-compost").html($(this).text())
-                $("#ch-compost").val($(this).attr("name"))
-                $("#ch-compost2").html($(this).text())
-                $("#ch-compost2").val($(this).attr("name"))
-            })
-            $(".add-compost-item").click(function(){
-                $("#ch-add-compost").html($(this).text())
-                $("#ch-add-compost").val($(this).attr("name"))
-                $("#ch-add-compost2").html($(this).text())
-                $("#ch-add-compost2").val($(this).attr("name"))
-            })
-            $('.datepicker').datepicker({
-                format: 'dd/mm/yyyy',
-                todayHighlight: true,
-                todayBtn: false,
-                language: 'th', 
-                thaiyear: true              
-            }).datepicker("setDate", "0");
-            $("#submit-compost1").click(function(){
-                $("#compost-date").val($("#inputdatepicker-compost").val())
-                $("#compost-type").val($("#ch-compost").val())
-                $("#compost-unit").val($("#ch-add-compost").val())
-                $("#compost-form-add").submit()
-            })
-            $("#submit-compost2").click(function(){
-                $("#compost-date2").val($("#inputdatepicker-compost2").val())
-                $("#compost-type2").val($("#ch-compost2").val())
-                $("#compost-unit2").val($("#ch-add-compost2").val())
-                $("#compost-form-edit").submit()
-            })
+                if(window.innerWidth <= 767){
+                    if(n_checked > 0){
+                        $("#delete-bar-1").css({top: window.innerHeight - 60, height: 60})
+                    }else{
+                        $("#delete-bar-1").css({top: window.innerHeight})
+                    }
+                }else{
+                    if(n_checked > 0){
+                        $("#delete-bar-2").css({height: 50})
+                    }else{
+                        $("#delete-bar-2").css({height: 0})
+                    }
+                    $("#delete-bar-2").css({display: "block"})
+                }
+                console.log($("#delete-bar-2"))
+            }
+            $(".compost-edit-cb").click(shift_delete)
+            $("#mainCheckbox").click(shift_delete)
+        }
+        $(".delete-bar").click(function(){
+            var cbs = $(".compost-edit-cb")
+            remove_list = []
+            for(var p = 0; p < cbs.length; p++){
+                if(cbs[p].checked){
+                    remove_list.push(cbs[p].value)
+                }
+            }
+            $("#delete-ids").val(JSON.stringify(remove_list))
         })
-    </script>
-</body>
-
-</html>
+        $(".submit-delete").click(function(){
+            $("#delete-form").submit()
+        })
+        $(".show_edit").click(function(){
+            c_id = parseInt($(this).attr("name"))-1
+            compost = JSON.parse("{{ c_js | escapejs }}");
+            $("#ch-compost2").html(compost[c_id].type)
+            $("#ch-compost2").val(compost[c_id].type)
+            $("#compost-total2").val(compost[c_id].total)
+            $("#ch-add-compost2").html(compost[c_id].unit)
+            $("#ch-add-compost2").val(compost[c_id].unit)
+            $("#inputdatepicker-compost2").val(compost[c_id].date)
+            
+            $("#c_id").val(compost[c_id].id)
+            
+            $("#edit-compost").modal('show');
+        })
+        $(".compost-item").click(function(){
+            $("#ch-compost").html($(this).text())
+            $("#ch-compost").val($(this).attr("name"))
+            $("#ch-compost2").html($(this).text())
+            $("#ch-compost2").val($(this).attr("name"))
+        })
+        $(".add-compost-item").click(function(){
+            $("#ch-add-compost").html($(this).text())
+            $("#ch-add-compost").val($(this).attr("name"))
+            $("#ch-add-compost2").html($(this).text())
+            $("#ch-add-compost2").val($(this).attr("name"))
+        })
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            todayHighlight: true,
+            todayBtn: false,
+            language: 'th', 
+            thaiyear: true              
+        }).datepicker("setDate", "0");
+        $("#submit-compost1").click(function(){
+            $("#compost-date").val($("#inputdatepicker-compost").val())
+            $("#compost-type").val($("#ch-compost").val())
+            $("#compost-unit").val($("#ch-add-compost").val())
+            $("#compost-form-add").submit()
+        })
+        $("#submit-compost2").click(function(){
+            $("#compost-date2").val($("#inputdatepicker-compost2").val())
+            $("#compost-type2").val($("#ch-compost2").val())
+            $("#compost-unit2").val($("#ch-add-compost2").val())
+            $("#compost-form-edit").submit()
+        })
+    })
+</script>

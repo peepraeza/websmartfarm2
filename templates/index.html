@@ -260,7 +260,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="row valvcontrol">
                             <!-- Column -->
                             <div class="card col-md-12">
@@ -268,9 +268,12 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <h4 class="card-title">ควบคุมวาล์ว</h4>
+                                            <p id = "nodestate">สถานะ : กำลังอัพเดต..</p>
                                         </div>
                                         <div class="col-6">
+                                            
                                             <div class="text-right">
+                                                
                                                 <p class="breadcrumb-item"><button type="button" class="btn btn-danger btn-sm">ตั้งเวลา</button></p>
                                             </div>
                                         </div>
@@ -280,7 +283,9 @@
                                     <div class="col-lg-6 col-xlg-3">
                                         <div class="card card-hover">
                                             <div class="box text-center">
-                                                </br>
+                                                <div class="led-box">
+                                                    <div id="led1" class="led-green"></div>
+                                                </div>
                                                 <h1 class="font-light text-white">
                                                 <button id="sensor_control" type="button" class="btn btn-lg btn-toggle {{ button1 }}" data-toggle="button" aria-pressed="{{ state1 }}" autocomplete="off">
                                                     <div class="handle"></div>
@@ -294,7 +299,9 @@
                                     <div class="col-lg-6 col-xlg-3">
                                         <div class="card card-hover">
                                             <div class="box text-center">
-                                                </br>
+                                                <div class="led-box">
+                                                    <div id="led2" class="led-green"></div>
+                                                </div>
                                                 <h1 class="font-light text-white">
                                                 <button id="sensor_control2" type="button" class="btn btn-lg btn-toggle {{ button2 }}" data-toggle="button" aria-pressed="{{ state2 }}" autocomplete="off">
                                                     <div class="handle"></div>
@@ -309,7 +316,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="card plant-card">
                             <div class="card-body showseed">
                                 <div class="row">
@@ -601,17 +608,21 @@
         if(data=="ON1"){
           status = "on";
           v = '1';
+          $("#led1").css("background-color", "#0F0");
         }else if(data=="OFF1"){
           status = "off"; 
           v= '1';
+          $("#led1").css("background-color", "#080");
         }
         else if(data=="ON2"){
           status = "on"; 
           v='2';
+          $("#led2").css("background-color", "#0F0");
         }
         else if(data=="OFF2"){
           status = "off"; 
           v= '2';
+          $("#led2").css("background-color", "#080");
         }
         $.ajax({
             url: '/valve_state/',
@@ -628,7 +639,14 @@
       });
     
       microgear.on('present', function(event) {
-        console.log(event);
+          console.log(event);
+        if (event.alias == "LekoSmartFarmNode"){
+            if(event.type == "online"){
+                document.getElementById("nodestate").innerHTML = "สถานะ : พร้อมใช้งาน";
+            }else if(event.type == "offline"){
+                document.getElementById("nodestate").innerHTML = "สถานะ : ยังไม่พร้อมใช้งาน";
+            }
+        }
       });
     
       microgear.on('absent', function(event) {
@@ -692,7 +710,18 @@
         document.getElementById("tab3").classList.remove('active');
         document.getElementById("tab4").classList.remove('active');
     });
-        
+    
+    if("{{ state1 }}" == "false"){
+        $("#led1").css("background-color", "#080");
+    }else{
+        $("#led1").css("background-color", "#0F0");
+    }
+    if("{{ state2 }}" == "false"){
+        $("#led2").css("background-color", "#080");
+    }else{
+        $("#led2").css("background-color", "#0F0");
+    }
+      
     firebase.initializeApp(config_firebase);
     var database = firebase.database();
     
