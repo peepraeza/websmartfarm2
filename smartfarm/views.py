@@ -9,8 +9,17 @@ import json
 from datetime import datetime, timedelta
 import time
 import requests
+import pytz
 
-# from django.utils import timezone
+tz = pytz.timezone('Asia/Bangkok')
+
+def unixtime_to_readable(unixtime):
+    tz = pytz.timezone('Asia/Bangkok')
+    now1 = datetime.fromtimestamp(unixtime, tz)
+    month_name = now1.month
+    thai_year = now1.year + 543
+    time_str = now1.strftime('%H:%M:%S')
+    return ("%d/%s/%d %s"%(now1.day, month_name, thai_year, time_str))
 
 key = {
   "type": "service_account",
@@ -39,6 +48,8 @@ def index(request):
         x_air_temperature = val["data"]["air_temperature"]
         x_soil_temperature = val["data"]["soil_temperature"]
         x_soil_moisure = val["data"]["soil_moisure"]
+        x_time = val["time"]        
+        time_x = unixtime_to_readable(x_time)
         
     refA = db.reference('A')
     resultA = refA.order_by_child('time').limit_to_last(1).get()
@@ -47,7 +58,9 @@ def index(request):
         a_air_temperature = val["data"]["air_temperature"]
         a_soil_temperature = val["data"]["soil_temperature"]
         a_soil_moisure = val["data"]["soil_moisure"]
-        
+        a_time = val["time"]
+        time_a = unixtime_to_readable(a_time)
+
     refB = db.reference('B')
     resultB = refB.order_by_child('time').limit_to_last(1).get()
     for key, val in resultB.items():
@@ -55,7 +68,9 @@ def index(request):
         b_air_temperature = val["data"]["air_temperature"]
         b_soil_temperature = val["data"]["soil_temperature"]
         b_soil_moisure = val["data"]["soil_moisure"]
-        
+        b_time = val["time"]
+        time_b = unixtime_to_readable(b_time)
+
     refC = db.reference('C')
     resultC = refC.order_by_child('time').limit_to_last(1).get()
     for key, val in resultC.items():
@@ -63,6 +78,9 @@ def index(request):
         c_air_temperature = val["data"]["air_temperature"]
         c_soil_temperature = val["data"]["soil_temperature"]
         c_soil_moisure = val["data"]["soil_moisure"]
+        c_time = val["time"]
+        time_c = unixtime_to_readable(c_time)
+        
     _v = Vegetable.objects.all()
     _p = Plant.objects.filter(is_harvested=False)
     p_data = []
@@ -111,18 +129,22 @@ def index(request):
         "x_air_temperature": x_air_temperature,
         "x_soil_temperature": x_soil_temperature,
         "x_soil_moisure": x_soil_moisure,
+        "updated_date_x": time_x, 
         "a_air_humidity": a_air_humidity,
         "a_air_temperature": a_air_temperature,
         "a_soil_temperature": a_soil_temperature,
         "a_soil_moisure": a_soil_moisure,
+        "updated_date_a": time_a, 
         "b_air_humidity": b_air_humidity,
         "b_air_temperature": b_air_temperature,
         "b_soil_temperature": b_soil_temperature,
+        "updated_date_b": time_b, 
         "c_soil_moisure": c_soil_moisure,
         "c_air_humidity": c_air_humidity,
         "c_air_temperature": c_air_temperature,
         "c_soil_temperature": c_soil_temperature,
         "c_soil_moisure": c_soil_moisure,
+        "updated_date_c": time_c, 
     })
     
 def login(request):

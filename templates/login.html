@@ -127,7 +127,23 @@
     <script src="{% static "js/custom.min.js" %}"></script>
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
     <script src="{% static "js/config_firebase.js" %}"></script>
-    
+    <script>
+
+    $('[data-toggle="tooltip"]').tooltip();
+    $(".preloader").fadeOut();
+    // ============================================================== 
+    // Login and Recover Password 
+    // ============================================================== 
+    $('#to-recover').on("click", function() {
+        $("#loginform").slideUp();
+        $("#recoverform").fadeIn();
+    });
+    $('#to-login').click(function(){
+        
+        $("#recoverform").hide();
+        $("#loginform").fadeIn();
+    });
+    </script>
 </body>
 
 </html>
