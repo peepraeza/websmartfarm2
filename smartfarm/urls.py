@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from . import views
+from views import views, user_views, vegetable_views, plant_views
 
 urlpatterns = [
+    # common views
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
     url(r'^index', views.index),
@@ -28,20 +29,31 @@ urlpatterns = [
     url(r'^delete_history/', views.del_history),
     url(r'^view_history/', views.view_history),
     url(r'^meter/', views.control),
-    url(r'^vegetables/view/', views.view_vegetable),
-    url(r'^vegetables/new/', views.new_vegetable),
-    url(r'^vegetables/add/', views.add_vegetable),
-    url(r'^vegetables/delete/', views.del_vegetable),
-    url(r'^vegetables/update/', views.update_vegetable),
-    url(r'^vegetables/edit/(?P<id>[0-9]+)', views.edit_vegetable),
-    url(r'^plant/add/', views.add_plant),
-    url(r'^plant/keep/', views.keep_plant),
-    url(r'^plant/compost/', views.add_compost),
-    url(r'^plant/edit_compost', views.edit_compost),
-    url(r'^plant/view_compost/(?P<id>[0-9]+)', views.view_compost),
-    url(r'^plant/delete/', views.del_plant),
-    url(r'^plant/delete_compost/', views.del_compost),
     url(r'^valve/', views.valve),
     url(r'^valve_state/', views.valve_state),
-    url(r'^login/', views.login),
+    
+    # vegetable views
+    url(r'^vegetables/view/', vegetable_views.view_vegetable),
+    url(r'^vegetables/new/', vegetable_views.new_vegetable),
+    url(r'^vegetables/add/', vegetable_views.add_vegetable),
+    url(r'^vegetables/delete/', vegetable_views.del_vegetable),
+    url(r'^vegetables/update/', vegetable_views.update_vegetable),
+    url(r'^vegetables/edit/(?P<id>[0-9]+)', vegetable_views.edit_vegetable),
+    
+    # plant views
+    url(r'^plant/add/', plant_views.add_plant),
+    url(r'^plant/keep/', plant_views.keep_plant),
+    url(r'^plant/compost/', plant_views.add_compost),
+    url(r'^plant/edit_compost', plant_views.edit_compost),
+    url(r'^plant/view_compost/(?P<id>[0-9]+)', plant_views.view_compost),
+    url(r'^plant/delete/', plant_views.del_plant),
+    url(r'^plant/delete_compost/', plant_views.del_compost),
+    
+    # user views
+    url(r'^signin/', user_views.signin),
+    url(r'^login/', user_views.login),
+    url(r'^makelogin/', user_views.make_login),
+    url(r'^logout/', user_views.logout),
+    url(r'^user/change_password/', user_views.change_password),
+    url(r'^user/change_email/', user_views.change_email),
 ]

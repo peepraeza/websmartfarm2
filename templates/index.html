@@ -116,6 +116,13 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/vegetables/view/" aria-expanded="false"><i class="fas fa-database"></i><span class="hide-menu">ข้อมูลพืชผล</span></a></li>
                         <li class="sidebar-item bar-mobile"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/graph/" aria-expanded="false"><i class="fas fa-chart-bar"></i><span class="hide-menu">กราฟ</span></a></li>
                         <li class="sidebar-item bar-mobile"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/history/" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu">ประวัติ</span></a></li>
+                        <li class="sidebar-item" data-toggle="modal" data-target="#logout-modal" > <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false" ><i class="fas fa-sign-out-alt"></i><span class="hide-menu">ออกจากระบบ</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">ตั้งค่าผู้ใช้งาน </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <li class="sidebar-item" data-toggle="modal" data-target="#change-email"><a href="#" class="sidebar-link"><i class="fas fa-envelope"></i><span class="hide-menu"> แก้ไขอีเมลล์ </span></a></li>
+                                <li class="sidebar-item" data-toggle="modal" data-target="#change-password"><a href="#" class="sidebar-link"><i class="fas fa-key"></i><span class="hide-menu"> แก้ไขรหัสผ่าน </span></a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -132,7 +139,7 @@
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-             <div class="page-breadcrumb">
+            <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
                         <h4 class="page-title1">หน้าหลัก</h4>
@@ -170,7 +177,7 @@
                             <!-- Tab panes -->
                             <div class="tab-content tabcontent-border">
                                 <div class="tab-pane active" id="tab1" role="tabpanel">
-                                    <p style = "margin: 10px 15px; text-align:right">อัพเดตเวลาล่าสุด : {{updated_date_x}}</p>
+                                    <p id = "updated_time_x" style = "margin: 10px 15px; text-align:right">อัพเดตเวลาล่าสุด : {{updated_date_x}}</p>
                                     <div class="box bg-white text-center">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -193,7 +200,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab2" role="tabpanel">
-                                    <p style = "margin: 10px 15px; text-align:right">อัพเดตเวลาล่าสุด : {{updated_date_a}}</p>
+                                    <p id = "updated_time_a" style = "margin: 10px 15px; text-align:right">อัพเดตเวลาล่าสุด : {{updated_date_a}}</p>
                                     <div class="box bg-white text-center">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -216,7 +223,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab3" role="tabpanel">
-                                    <p style = "margin: 10px 15px; text-align:right">อัพเดตเวลาล่าสุด : {{updated_date_b}}</p>
+                                    <p id = "updated_time_b" style = "margin: 10px 15px; text-align:right">อัพเดตเวลาล่าสุด : {{updated_date_b}}</p>
                                     <div class="box bg-white text-center">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -239,7 +246,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab4" role="tabpanel">
-                                    <p style = "margin: 10px 15px; text-align:right">อัพเดตเวลาล่าสุด : {{updated_date_c}}</p>
+                                    <p id = "updated_time_c" style = "margin: 10px 15px; text-align:right">อัพเดตเวลาล่าสุด : {{updated_date_c}}</p>
                                     <div class="box bg-white text-center">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -275,11 +282,11 @@
                                             <p id = "nodestate">สถานะ : กำลังอัพเดต..</p>
                                         </div>
                                         <div class="col-6">
-                                            <div class="text-right">
-                                                <nav aria-label="breadcrumb">
-                                                    <button type="button" class="breadcrumb-item btn btn-danger btn-sm" data-toggle="modal" data-target="#timesetting-modal"><a style="text-decorations:none; color:inherit;" href= "#" >ตั้งเวลา</a></button>
-                                                </nav>
-                                            </div>
+                                            <!--<div class="text-right">-->
+                                            <!--    <nav aria-label="breadcrumb">-->
+                                            <!--        <button type="button" class="breadcrumb-item btn btn-danger btn-sm" data-toggle="modal" data-target="#timesetting-modal"><a style="text-decorations:none; color:inherit;" href= "#" >ตั้งเวลา</a></button>-->
+                                            <!--    </nav>-->
+                                            <!--</div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -435,6 +442,9 @@
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
+    
+    {% include "subtemp/user_modals.html" %}
+    
     <div class="modal fade" id="delete-plant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -574,6 +584,28 @@
         </div>
     </div>
     
+    <div class="modal fade" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ยืนยันการออกจากระบบ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    คุณต้องการออกจากระบบ ใช่หรือไม่ ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <form action="/logout/" method="POST">
+                        <input type="submit" id="submit-logout" class="btn btn-success" value="ตกลง">
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--popup time setting-->
     <div class="modal fade" id="timesetting-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -635,6 +667,7 @@
         </div>
     </div>
     
+    
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
@@ -645,8 +678,6 @@
     <script src="{% static "assets/libs/bootstrap/dist/js/bootstrap.min.js" %}"></script>
     <script src="{% static "assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js" %}"></script>
     <script src="{% static "assets/extra-libs/sparkline/sparkline.js" %}"></script>
-    <!--Wave Effects -->
-    <script src="{% static "js/waves.js" %}"></script>
     <!--Menu sidebar -->
     <script src="{% static "js/sidebarmenu.js" %}"></script>
     <!--Custom JavaScript -->
@@ -844,6 +875,12 @@
     var c_soil_temperature = "{{c_soil_temperature}}"
     </script>
     <script src="{% static "js/meter.js" %}"></script>
+    <script src="{% static "js/update_time.js" %}"></script>
 </body>
 
 </html>
+
+{% include "subtemp/extra_js.html" %}
+<script type="text/javascript" src="">
+    setSidebarActive(0)
+</script>

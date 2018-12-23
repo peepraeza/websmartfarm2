@@ -1,6 +1,6 @@
 def parse_keys(keys, post_inst):
     _res_dict = {}
-    for k, t in keys.items(): 
+    for k, t in keys.items():
         _res_dict[t[0]] = t[1](post_inst.get(k).encode('utf-8'))
     return _res_dict
     

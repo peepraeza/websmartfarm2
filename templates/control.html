@@ -153,6 +153,7 @@
                             <!-- Tab panes -->
                              <div class="tab-content tabcontent-border">
                                 <div class="tab-pane active" id="tab1" role="tabpanel">
+                                    <p id = "updated_time_x" style = "margin: 10px 15px; text-align:center">อัพเดตเวลาล่าสุด : {{x_time}}</p>
                                     <div class="box bg-white text-center">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -175,6 +176,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab2" role="tabpanel">
+                                    <p id = "updated_time_a" style = "margin: 10px 15px; text-align:center">อัพเดตเวลาล่าสุด : {{a_time}}</p>
                                     <div class="box bg-white text-center">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -197,6 +199,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab3" role="tabpanel">
+                                    <p id = "updated_time_b" style = "margin: 10px 15px; text-align:center">อัพเดตเวลาล่าสุด : {{b_time}}</p>
                                     <div class="box bg-white text-center">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -219,6 +222,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane active" id="tab4" role="tabpanel">
+                                    <p id = "updated_time_c" style = "margin: 10px 15px; text-align:center">อัพเดตเวลาล่าสุด : {{c_time}}</p>
                                     <div class="box bg-white text-center">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -310,8 +314,6 @@
     <script src="{% static "assets/libs/bootstrap/dist/js/bootstrap.min.js" %}"></script>
     <script src="{% static "assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js" %}"></script>
     <script src="{% static "assets/extra-libs/sparkline/sparkline.js" %}"></script>
-    <!--Wave Effects -->
-    <script src="{% static "js/waves.js" %}"></script>
     <!--Menu sidebar -->
     <script src="{% static "js/sidebarmenu.js" %}"></script>
     <!--Custom JavaScript -->
@@ -348,6 +350,7 @@
         var c_soil_moisure = "{{c_soil_moisure}}"
         var c_soil_temperature = "{{c_soil_temperature}}"
     </script>
+    <script src="{% static "js/update_time.js" %}"></script>
     <script src="{% static "js/meter.js" %}"></script>
 </body>
 

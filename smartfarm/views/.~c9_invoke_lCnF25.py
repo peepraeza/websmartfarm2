@@ -1,7 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
+
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from models import Plant, Vegetable, Compost
-from post_data import parse_keys, Plant_keys,parse_keys2, parse_keys3, parse_keys4
+from django.core.mail import send_mail
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from ..models import Plant, Vegetable, Compost
+from ..post_data import parse_keys, Plant_keys,parse_keys2, parse_keys3, parse_keys4
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
@@ -10,8 +14,20 @@ from datetime import datetime, timedelta
 import time
 import requests
 import pytz
+import numpy as np
+from threading import Timer
+
+def valve_timer(valve):
+    if(valve == )
+        print()
+    
+def print_some_times():
+    print("valve1 ON")
+    Timer(10, valve_timer, ()).start()
+    Timer(20, print_time, ()).start()
 
 tz = pytz.timezone('Asia/Bangkok')
+list_nodes = ['X', 'A', 'B', 'C']
 
 def unixtime_to_readable(unixtime):
     tz = pytz.timezone('Asia/Bangkok')
@@ -41,46 +57,19 @@ firebase_admin.initialize_app(cred, {
 
     
 def index(request):
-    refX = db.reference('X')
-    resultX = refX.order_by_child('time').limit_to_last(1).get()
-    for key, val in resultX.items():
-        x_air_humidity = val["data"]["air_humidity"]
-        x_air_temperature = val["data"]["air_temperature"]
-        x_soil_temperature = val["data"]["soil_temperature"]
-        x_soil_moisure = val["data"]["soil_moisure"]
-        x_time = val["time"]        
-        time_x = unixtime_to_readable(x_time)
-        
-    refA = db.reference('A')
-    resultA = refA.order_by_child('time').limit_to_last(1).get()
-    for key, val in resultA.items():
-        a_air_humidity = val["data"]["air_humidity"]
-        a_air_temperature = val["data"]["air_temperature"]
-        a_soil_temperature = val["data"]["soil_temperature"]
-        a_soil_moisure = val["data"]["soil_moisure"]
-        a_time = val["time"]
-        time_a = unixtime_to_readable(a_time)
-
-    refB = db.reference('B')
-    resultB = refB.order_by_child('time').limit_to_last(1).get()
-    for key, val in resultB.items():
-        b_air_humidity = val["data"]["air_humidity"]
-        b_air_temperature = val["data"]["air_temperature"]
-        b_soil_temperature = val["data"]["soil_temperature"]
-        b_soil_moisure = val["data"]["soil_moisure"]
-        b_time = val["time"]
-        time_b = unixtime_to_readable(b_time)
-
-    refC = db.reference('C')
-    resultC = refC.order_by_child('time').limit_to_last(1).get()
-    for key, val in resultC.items():
-        c_air_humidity = val["data"]["air_humidity"]
-        c_air_temperature = val["data"]["air_temperature"]
-        c_soil_temperature = val["data"]["soil_temperature"]
-        c_soil_moisure = val["data"]["soil_moisure"]
-        c_time = val["time"]
-        time_c = unixtime_to_readable(c_time)
-        
+    print_some_times()
+    data_dict = {}
+    for t in list_nodes:
+        ref = db.reference(t)
+        result = ref.order_by_child('time').limit_to_last(1).get()
+        t = t.lower()
+        for key, val in result.items():
+            data_dict["{}_air_humidity".format(t)] = val["data"]["air_humidity"]
+            data_dict["{}_air_temperature".format(t)] = val["data"]["air_temperature"]
+            data_dict["{}_soil_temperature".format(t)] = val["data"]["soil_temperature"]
+            data_dict["{}_soil_moisure".format(t)] = val["data"]["soil_moisure"]
+            data_dict["updated_date_{}".format(t)] = unixtime_to_readable(val["time"] )
+            
     _v = Vegetable.objects.all()
     _p = Plant.objects.filter(is_harvested=False)
     p_data = []
@@ -118,86 +107,33 @@ def index(request):
     else:
         state2 = "true"
         _b2 = "active"
-    return render(request, "index.html", {
+        
+    return_dict = {
         "vegs": _v,
         "plant": p_data,
         "state1": state1,
         "button1": _b1,
         "state2": state2,
-        "button2": _b2,
-        "x_air_humidity": x_air_humidity,
-        "x_air_temperature": x_air_temperature,
-        "x_soil_temperature": x_soil_temperature,
-        "x_soil_moisure": x_soil_moisure,
-        "updated_date_x": time_x, 
-        "a_air_humidity": a_air_humidity,
-        "a_air_temperature": a_air_temperature,
-        "a_soil_temperature": a_soil_temperature,
-        "a_soil_moisure": a_soil_moisure,
-        "updated_date_a": time_a, 
-        "b_air_humidity": b_air_humidity,
-        "b_air_temperature": b_air_temperature,
-        "b_soil_temperature": b_soil_temperature,
-        "updated_date_b": time_b, 
-        "c_soil_moisure": c_soil_moisure,
-        "c_air_humidity": c_air_humidity,
-        "c_air_temperature": c_air_temperature,
-        "c_soil_temperature": c_soil_temperature,
-        "c_soil_moisure": c_soil_moisure,
-        "updated_date_c": time_c, 
-    })
+        "button2": _b2
+    }
+    return_dict.update(data_dict)
     
-def login(request):
-    return render(request, "login.html")
+    return render(request, "index.html", return_dict)
 
 def control(request):
-    refX = db.reference('X')
-    resultX = refX.order_by_child('time').limit_to_last(1).get()
-    for key, val in resultX.items():
-        x_air_humidity = val["data"]["air_humidity"]
-        x_air_temperature = val["data"]["air_temperature"]
-        x_soil_temperature = val["data"]["soil_temperature"]
-        x_soil_moisure = val["data"]["soil_moisure"]
-        
-    refA = db.reference('A')
-    resultA = refA.order_by_child('time').limit_to_last(1).get()
-    for key, val in resultA.items():
-        a_air_humidity = val["data"]["air_humidity"]
-        a_air_temperature = val["data"]["air_temperature"]
-        a_soil_temperature = val["data"]["soil_temperature"]
-        a_soil_moisure = val["data"]["soil_moisure"]
-        
-    refB = db.reference('B')
-    resultB = refB.order_by_child('time').limit_to_last(1).get()
-    for key, val in resultB.items():
-        b_air_humidity = val["data"]["air_humidity"]
-        b_air_temperature = val["data"]["air_temperature"]
-        b_soil_temperature = val["data"]["soil_temperature"]
-        b_soil_moisure = val["data"]["soil_moisure"]
-        
-    refC = db.reference('C')
-    resultC = refC.order_by_child('time').limit_to_last(1).get()
-    for key, val in resultC.items():
-        c_air_humidity = val["data"]["air_humidity"]
-        c_air_temperature = val["data"]["air_temperature"]
-        c_soil_temperature = val["data"]["soil_temperature"]
-        c_soil_moisure = val["data"]["soil_moisure"]
-    return render(request, "control.html", {"x_air_humidity": x_air_humidity,
-                                            "x_air_temperature": x_air_temperature,
-                                            "x_soil_temperature": x_soil_temperature,
-                                            "x_soil_moisure": x_soil_moisure,
-                                            "a_air_humidity": a_air_humidity,
-                                            "a_air_temperature": a_air_temperature,
-                                            "a_soil_temperature": a_soil_temperature,
-                                            "a_soil_moisure": a_soil_moisure,
-                                            "b_air_humidity": b_air_humidity,
-                                            "b_air_temperature": b_air_temperature,
-                                            "b_soil_temperature": b_soil_temperature,
-                                            "c_soil_moisure": c_soil_moisure,
-                                            "c_air_humidity": c_air_humidity,
-                                            "c_air_temperature": c_air_temperature,
-                                            "c_soil_temperature": c_soil_temperature,
-                                            "c_soil_moisure": c_soil_moisure,})
+    
+    data_dict = {}
+    for t in list_nodes:
+        ref = db.reference(t)
+        result = ref.order_by_child('time').limit_to_last(1).get()
+        t = t.lower()
+        for key, val in result.items():
+            data_dict["{}_air_humidity".format(t)] = val["data"]["air_humidity"]
+            data_dict["{}_air_temperature".format(t)] = val["data"]["air_temperature"]
+            data_dict["{}_soil_temperature".format(t)] = val["data"]["soil_temperature"]
+            data_dict["{}_soil_moisure".format(t)] = val["data"]["soil_moisure"]
+            data_dict["{}_time".format(t)] = unixtime_to_readable(val["time"])
+    return render(request, "control.html", data_dict)
     
 
 def history(request):
@@ -212,12 +148,12 @@ def history(request):
     
 def view_history(request):
     p_t = request.POST.get("p_t")
-    print(p_t)
     if(p_t == "all"):
         _p = Plant.objects.all()
     else:
         _p = Plant.objects.filter(is_harvested=True, plant_type=p_t)
     p_data = []
+    node_val = []
     for i in _p:
         di = {}
         di["start_date"] = i.start_plant_timestamp.strftime("%d/%m/%Y")
@@ -226,6 +162,14 @@ def view_history(request):
         di["sensor"] = i.sensor
         di["id"] = i.id
         di["totals"] = str(i.keep_total)+" "+i.keep_unit
+        if( i.sensor == u'ตู้ต้นแปลง' ):
+            node = "C"
+        elif(i.sensor == u'ตู้กลางแปลง'):
+            node = "B"
+        else:
+            node = "A"
+        value = get_value_from_date(di["start_date"], di["end_date"], node, di["id"])
+        node_val.append(value)
         p_data.append(di)
     _c = Compost.objects.all()
     c_data = []
@@ -243,134 +187,13 @@ def view_history(request):
         c_data.append(di)
         i= i+1
     
-    return render(request,"view_history.html", {"p_t":p_t ,"plant":p_data, "compost":json.dumps(c_data)})
+    return render(request,"view_history.html", {"p_t":p_t ,"plant":p_data, "compost":json.dumps(c_data), "history":json.dumps(p_data), "node_val":json.dumps(node_val)})
     
-def meter(request):
-    refA = db.reference('A')
-    result = refA.order_by_child('time').limit_to_last(1).get()
-    for key, val in result.items():
-        air_humidity = val["data"]["air_humidity"]
-        air_temperature = val["data"]["air_temperature"]
-        soil_temperature = val["data"]["soil_temperature"]
-        soil_moisure = val["data"]["soil_moisure"]
-    return render(request, "meter.html", {"air_humidity":air_humidity,
-                                          "air_temperature": air_temperature,
-                                          "soil_temperature": soil_temperature,
-                                          "soil_moisure": soil_moisure})
-    
-def view_vegetable(request):
-    _v = Vegetable.objects.all()
-    return render(request, "view_vegetable.html", {"vegs": _v})
-    
-def view_compost(request, id):
-    _c = Compost.objects.filter(plant_id=id)
-    _p = Plant.objects.get(pk=id)
-    c_data = []
-    i=1
-    for v in _c:
-        di = {}
-        di["id"] = v.pk
-        di["number"] = i
-        di["date"] = v.compost_date.strftime("%d/%m/%Y")
-        di["type"] = v.compost_type
-        di["totals"] = str(v.compost_total) + " " + v.compost_unit
-        di["total"] = v.compost_total
-        di["unit"] = v.compost_unit
-        c_data.append(di)
-        i= i+1
-    
-    return render(request, "view_compost.html", {"compost": c_data , "plant":_p ,"c_js": json.dumps(c_data)})
-    
-def new_vegetable(request):
-    return render(request, "new_vegetable.html")
-
-def add_vegetable(request):
-    if request.method == "POST":
-        parsed_val = parse_keys(Plant_keys, request.POST)
-        _v = Vegetable(**parsed_val)
-        _v.save()
-    return redirect("/vegetables/view/")
-    
-def add_plant(request):
-    if request.method == "POST":
-        time = str(request.POST.get("start-plant-timestamp")) 
-        date_time_obj = datetime.strptime(time, '%d/%m/%Y')
-        parsed_val = parse_keys2(request.POST.get("plant-type"), date_time_obj, request.POST.get("sensor"))
-        _p = Plant(**parsed_val)
-        _p.save()
-    return redirect("/")
-    
-def add_compost(request):
-    if request.method == "POST":
-        time = str(request.POST.get("compost-date")) 
-        c_date = datetime.strptime(time, '%d/%m/%Y')
-        p_id = request.POST.get("p_id")
-        c_type = request.POST.get("compost-type")
-        c_total = request.POST.get("compost-total")
-        c_unit = request.POST.get("compost-unit")
-        parsed_val = parse_keys3(p_id, c_date, c_type, c_total, c_unit)
-        _c = Compost(**parsed_val)
-        _c.save()
-    html = "/plant/view_compost/"+str(p_id)+"/"
-    return redirect(html)
-
 def del_history(request):
     v_id = request.POST.get("p_t")
     ids = json.loads(request.POST.get("delete-ids"))
     Plant.objects.filter(pk__in=ids).delete()
     return redirect("/history/")
-    
-def del_vegetable(request):
-    ids = json.loads(request.POST.get("delete-ids"))
-    Vegetable.objects.filter(pk__in=ids).delete()
-    return redirect("/vegetables/view/")
-    
-def del_compost(request):
-    p_id = int(request.POST.get("p_id"))
-    ids = json.loads(request.POST.get("delete-ids"))
-    Compost.objects.filter(pk__in=ids).delete()
-    html = "/plant/view_compost/"+str(p_id)+"/"
-    return redirect(html)
-    
-def del_plant(request):
-    id = int(request.POST.get("delete-id"))
-    Plant.objects.filter(pk=id).delete()
-    return redirect("/")
-    
-def edit_vegetable(request, id):
-    _v = Vegetable.objects.get(pk=id)
-    return render(request, "edit_vegetable.html", {
-        "v": _v,
-    })
-def edit_compost(request):
-    id = int(request.POST.get("c_id"))
-    p_id = request.POST.get("p_id")
-    time = str(request.POST.get("compost-date")) 
-    c_date = datetime.strptime(time, '%d/%m/%Y')
-    c_type = request.POST.get("compost-type")
-    c_total = request.POST.get("compost-total")
-    c_unit = request.POST.get("compost-unit")
-    parsed_val = parse_keys3(p_id, c_date, c_type, c_total, c_unit)
-    Compost.objects.filter(pk=id).update(**parsed_val)
-    html = "/plant/view_compost/"+str(p_id)+"/"
-    return redirect(html)
-    
-def keep_plant(request):
-    if request.method == "POST":
-        id = int(request.POST.get("p_id"))
-        time = str(request.POST.get("keep-date")) 
-        date = datetime.strptime(time, '%d/%m/%Y')
-        total = request.POST.get("keep-total")
-        unit = request.POST.get("keep-unit")
-        parsed_val = parse_keys4(date, total, unit)
-        Plant.objects.filter(pk=id).update(**parsed_val)
-    return redirect("/")
-    
-def update_vegetable(request):
-    id = int(request.POST.get("id"))
-    parsed_val = parse_keys(Plant_keys, request.POST)
-    Vegetable.objects.filter(pk=id).update(**parsed_val)
-    return redirect("/vegetables/view/")
     
 def valve(request):
     refA = db.reference('Valve_Status')
@@ -428,7 +251,7 @@ def valve_state(request):
     
 def graph(request):
     refX = db.reference('X')
-    result_x = refX.order_by_child('time').limit_to_last(288).get()
+    result_x = refX.order_by_child('time').limit_to_last(80).get()
     x_array_json_air_humid = []
     x_array_json_air_temp = []
     x_array_json_soil_moisure = []
@@ -452,7 +275,7 @@ def graph(request):
         x_array_json_soil_temp.append(x_json_soil_temp)
         
     refA = db.reference('A')
-    result_a = refA.order_by_child('time').limit_to_last(288).get()
+    result_a = refA.order_by_child('time').limit_to_last(80).get()
     a_array_json_air_humid = []
     a_array_json_air_temp = []
     a_array_json_soil_moisure = []
@@ -476,7 +299,7 @@ def graph(request):
         a_array_json_soil_temp.append(a_json_soil_temp)
     
     refB = db.reference('B')
-    result_b = refB.order_by_child('time').limit_to_last(288).get()
+    result_b = refB.order_by_child('time').limit_to_last(80).get()
     b_array_json_air_humid = []
     b_array_json_air_temp = []
     b_array_json_soil_moisure = []
@@ -500,7 +323,7 @@ def graph(request):
         b_array_json_soil_temp.append(b_json_soil_temp)
     
     refC = db.reference('C')
-    result_c = refC.order_by_child('time').limit_to_last(288).get()
+    result_c = refC.order_by_child('time').limit_to_last(80).get()
     c_array_json_air_humid = []
     c_array_json_air_temp = []
     c_array_json_soil_moisure = []
@@ -543,3 +366,54 @@ def graph(request):
                                           "c_soil_moisure": json.dumps(c_array_json_soil_moisure),
                                           "c_soil_temperature": json.dumps(c_array_json_soil_temp),
                                           })
+
+def get_value_from_date(start, end, node, p_id):
+    
+    date_start = []
+    date_end = []
+    date_start = start.split("/")
+    date_start[2] = int(date_start[2])-543
+    time = date_start[0]+"/"+date_start[1]+"/"+str(date_start[2])
+    date_start_obj = datetime.strptime(time, '%d/%m/%Y')
+    unix_date_start = date_start_obj.strftime("%s")
+    
+    date_end = end.split("/")
+    date_end[2] = int(date_end[2])-543
+    time = date_end[0]+"/"+date_end[1]+"/"+str(date_end[2])
+    date_end_obj = datetime.strptime(time, '%d/%m/%Y')
+    unix_date_end = date_end_obj.strftime("%s")
+
+    
+    ref = db.reference(node)
+    result = ref.order_by_child('time').start_at(int(unix_date_start)).end_at(int(unix_date_end)).get()
+    time = []
+    air_humidity = []
+    air_temperature = []
+    soil_temperature = []
+    soil_moisure = []
+    for key, val in result.items():
+       
+        air_humidity.append(val["data"]["air_humidity"])
+        air_temperature.append(val["data"]["air_temperature"])
+        soil_temperature.append(val["data"]["soil_temperature"])
+        soil_moisure.append(val["data"]["soil_moisure"])
+    
+    value = {"p_id" : p_id,
+             "air_humid_avg" : round(np.mean(air_humidity),2),
+             "air_humid_max" : round(np.amax(air_humidity),2),
+             "air_humid_min" : round(np.amin(air_humidity),2),
+             
+             "air_temp_avg" : round(np.mean(air_temperature),2),
+             "air_temp_max" : round(np.amax(air_temperature),2),
+             "air_temp_min" : round(np.amin(air_temperature),2),
+             
+             "soil_moi_avg" : round(np.mean(soil_moisure),2),
+             "soil_moi_max" : round(np.amax(soil_moisure),2),
+             "soil_moi_min" : round(np.amin(soil_moisure),2),
+             
+             "soil_temp_avg" : round(np.mean(soil_temperature),2),
+             "soil_temp_max" : round(np.amax(soil_temperature),2),
+             "soil_temp_min" : round(np.amin(soil_temperature),2)
+             }
+    return value
+    

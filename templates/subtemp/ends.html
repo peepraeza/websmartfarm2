@@ -12,17 +12,19 @@
     <!-- ============================================================== -->
     <script src="{% static "js/main.js" %}"></script>
     <script src="{% static "assets/libs/jquery/dist/jquery.min.js" %}"></script>
+
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{% static "assets/libs/popper.js/dist/umd/popper.min.js" %}"></script>
     <script src="{% static "assets/libs/bootstrap/dist/js/bootstrap.min.js" %}"></script>
     <script src="{% static "assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js" %}"></script>
     <script src="{% static "assets/extra-libs/sparkline/sparkline.js" %}"></script>
-    <!--Wave Effects -->
-    <script src="{% static "js/waves.js" %}"></script>
+    
     <!--Menu sidebar -->
     <script src="{% static "js/sidebarmenu.js" %}"></script>
     <!--Custom JavaScript -->
     <script src="{% static "js/custom.min.js" %}"></script>
+    
+    
     <!-- Charts js Files -->
     <script src="{% static "assets/libs/flot/excanvas.js" %}"></script>
     <script src="{% static "assets/libs/flot/jquery.flot.js" %}"></script>
@@ -48,6 +50,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script src="https://github.com/nagix/chartjs-plugin-streaming/releases/download/v1.7.0/chartjs-plugin-streaming.min.js"></script>
     <script src="{% static "js/chart.js" type="text/javascript" %}"></script>
+    
 </body>
 
 </html>
+
+{% include "subtemp/extra_js.html" %}

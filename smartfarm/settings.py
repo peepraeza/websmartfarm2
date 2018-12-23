@@ -28,6 +28,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sansara.farm.10@gmail.com'
+EMAIL_HOST_PASSWORD = 'sansara@salawin'
+EMAIL_PORT = 587
+
 
 # Application definition
 
@@ -38,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'background_task',
     'smartfarm',
 ]
 
@@ -51,7 +58,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    'smartfarm.middleware.AuthenticationChecking'
+    'smartfarm.middleware.AuthenticationChecking',
 ]
 
 ROOT_URLCONF = 'smartfarm.urls'
@@ -125,4 +132,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+)
+
+FIXTURE_DIRS = (
+   '/smartfarm/fixtures/',
 )

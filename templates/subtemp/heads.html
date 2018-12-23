@@ -21,6 +21,10 @@
     <link href="{% static "css/button.css" %}" rel="stylesheet">
     <link href="{% static "css/main.css" %}" rel="stylesheet">
     <link href="{% static "css/datepicker/bootstrap-datepicker.css" %}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    
+    
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     
@@ -106,7 +110,13 @@
                         <li id="sidebar-item-2" class="sidebar-item"><a id="sidebar-link-2" class="sidebar-link waves-effect waves-dark sidebar-link" href="/vegetables/view/" aria-expanded="false"><i class="fas fa-database"></i><span class="hide-menu">ข้อมูลพืชผล</span></a></li>
                         <li id="sidebar-item-3" class="sidebar-item bar-mobile"><a id="sidebar-link-3" class="sidebar-link waves-effect waves-dark sidebar-link" href="/graph/" aria-expanded="false"><i class="fas fa-chart-bar"></i><span class="hide-menu">กราฟ</span></a></li>
                         <li id="sidebar-item-4" class="sidebar-item bar-mobile"><a id="sidebar-link-4" class="sidebar-link waves-effect waves-dark sidebar-link" href="/history/" aria-expanded="false"><i class="fas fa-history"></i><span class="hide-menu">ประวัติ</span></a></li>
-                    
+                        <li class="sidebar-item" data-toggle="modal" data-target="#logout-modal" > <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false" ><i class="fas fa-sign-out-alt"></i><span class="hide-menu">ออกจากระบบ</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">ตั้งค่าผู้ใช้งาน </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <li class="sidebar-item" data-toggle="modal" data-target="#change-email"><a href="#" class="sidebar-link"><i class="fas fa-envelope"></i><span class="hide-menu"> แก้ไขอีเมลล์ </span></a></li>
+                                <li class="sidebar-item" data-toggle="modal" data-target="#change-password"><a href="#" class="sidebar-link"><i class="fas fa-key"></i><span class="hide-menu"> แก้ไขรหัสผ่าน </span></a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

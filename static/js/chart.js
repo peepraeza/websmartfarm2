@@ -74,8 +74,8 @@ var config1 = {
 			xAxes: [{
 				type: 'realtime',
 				realtime: {
-					duration: 6*60*60000,
-					ttl: 6*67*60000,
+					duration: 12*60*60000,
+					ttl: 12*67*60000,
 					refresh: 1500,
 					delay: 0,
 					pause: false,
@@ -170,8 +170,8 @@ var config2 = {
 			xAxes: [{
 				type: 'realtime',
 				realtime: {
-					duration: 6*60*60000,
-					ttl: 6*67*60000,
+					duration: 12*60*60000,
+					ttl: 12*67*60000,
 					refresh: 1500,
 					delay: 0,
 					pause: false,
@@ -266,8 +266,8 @@ var config3 = {
 			xAxes: [{
 				type: 'realtime',
 				realtime: {
-					duration: 6*60*60000,
-					ttl: 6*67*60000,
+					duration: 12*60*60000,
+					ttl: 12*67*60000,
 					refresh: 1500,
 					delay: 0,
 					pause: false,
@@ -362,8 +362,8 @@ var config4 = {
 			xAxes: [{
 				type: 'realtime',
 				realtime: {
-					duration: 6*60*60000,
-					ttl: 6*67*60000,
+					duration: 12*60*60000,
+					ttl: 12*67*60000,
 					refresh: 1500,
 					delay: 0,
 					pause: false,
